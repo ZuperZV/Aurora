@@ -1,0 +1,6 @@
+{
+    "parent": "aurora:block/aurora_dust_side",
+    "textures": {
+        "line": "aurora:block/aurora_dust_line0"
+    }
+}
