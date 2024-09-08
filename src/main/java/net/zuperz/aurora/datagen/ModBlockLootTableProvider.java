@@ -34,12 +34,32 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(ModBlocks.AURORA_PEDESTAL.get());
         dropSelf(ModBlocks.GOLDEN_CAULDRON.get());
+        dropSelf(ModBlocks.PEDESTAL_SLAB.get());
+        dropSelf(ModBlocks.MY_BLOCK.get());
+
+        dropSelf(ModBlocks.AURORA_PILLER.get());
 
         this.add(ModBlocks.AURORA_WIRE.get(),
                 block -> LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModItems.AURORA_DUST.get()))
+                        )
+        );
+
+        this.add(ModBlocks.UPPER_AURORA_PILLER.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModBlocks.AURORA_PILLER.get()))
+                        )
+        );
+
+        this.add(ModBlocks.BLUESTONE.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 4)))
+                                .add(LootItem.lootTableItem(ModItems.BLUESTONE_DUST.get()))
                         )
         );
     }

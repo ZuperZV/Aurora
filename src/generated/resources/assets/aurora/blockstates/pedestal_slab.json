@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aurora:block/pedestal_slab",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aurora:block/pedestal_slab"
+    },
+    "facing=south": {
+      "model": "aurora:block/pedestal_slab",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aurora:block/pedestal_slab",
+      "y": 270
+    }
+  }
+}

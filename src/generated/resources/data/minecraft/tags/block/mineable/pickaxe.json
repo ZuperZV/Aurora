@@ -1,5 +1,10 @@
 {
   "values": [
-    "aurora:aurora_pedestal"
+    "aurora:aurora_pedestal",
+    "aurora:bluestone",
+    "aurora:upper_aurora_piller",
+    "aurora:aurora_piller",
+    "aurora:pedestal_slab",
+    "aurora:golden_cauldron"
   ]
 }

@@ -1,4 +1,9 @@
-// 1.21	2024-09-03T18:06:01.0902571	Loot Tables
+// 1.21	2024-09-07T17:46:25.4500249	Loot Tables
 8bcda7884a8f7da796a81b343e2643cbeb83d5a9 data/aurora/loot_table/blocks/aurora_pedestal.json
+5342425c50b82cdce1c53b5c2f8db2f8065faf99 data/aurora/loot_table/blocks/aurora_piller.json
 d83188d7c8ff7d4683d38fc0dccf180f91024f0b data/aurora/loot_table/blocks/aurora_wire.json
+742e30e2ad0867b99e530f3967660441a92ddb08 data/aurora/loot_table/blocks/bluestone.json
 6a4389c76c58f2c5d50cecc12681ffa184d11417 data/aurora/loot_table/blocks/golden_cauldron.json
+5f3c955efe421568a1edbe44434bc1078fe92560 data/aurora/loot_table/blocks/my_block.json
+d3eb31380bf23de5026d76204257ea4e3f264ff3 data/aurora/loot_table/blocks/pedestal_slab.json
+efe051c92097539f1a2ef3d6f7d9c7b1c78d12ba data/aurora/loot_table/blocks/upper_aurora_piller.json

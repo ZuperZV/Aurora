@@ -19,7 +19,12 @@ public class ModBlockTagProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.AURORA_PEDESTAL.get());
+                .add(ModBlocks.AURORA_PEDESTAL.get())
+                .add(ModBlocks.BLUESTONE.get())
+                .add(ModBlocks.UPPER_AURORA_PILLER.get())
+                .add(ModBlocks.AURORA_PILLER.get())
+                .add(ModBlocks.PEDESTAL_SLAB.get())
+                .add(ModBlocks.GOLDEN_CAULDRON.get());
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
         ;

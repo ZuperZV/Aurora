@@ -1,15 +1,18 @@
 package net.zuperz.aurora;
 
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.zuperz.aurora.Recipes.ModRecipes;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.block.entity.renderer.AuroraPedestalBlockEntityRenderer;
 import net.zuperz.aurora.block.entity.renderer.GoldenCauldronBlockEntityRenderer;
+import net.zuperz.aurora.block.entity.renderer.PedestalSlabBlockEntityRenderer;
 import net.zuperz.aurora.item.ModCreativeModeTabs;
 import net.zuperz.aurora.item.ModItems;
+import net.zuperz.aurora.screen.AlcheFlameScreen;
+import net.zuperz.aurora.screen.ModMenuTypes;
+import net.zuperz.aurora.screen.MyBlockScreen;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -39,10 +42,11 @@ public class aurora {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
-        //ModMenuTypes.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
-        //ModEntities.register(modEventBus);
-        //ModSounds.register(modEventBus);
+
+        ModRecipes.SERIALIZERS.register(modEventBus);
+        ModRecipes.RECIPE_TYPES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
@@ -63,6 +67,15 @@ public class aurora {
         LOGGER.info("HELLO from server starting");
     }
 
+    /*private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModMenuTypes.MY_MENU.get(), (o, dir) -> {
+            if (dir == null) return o.getItemHandler().get();
+            if (dir == Direction.DOWN) return o.getOutputItemHandler().get();
+            return o.getInputItemHandler().get();
+        });
+    }
+     */
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
@@ -70,6 +83,14 @@ public class aurora {
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.AURORA_PEDESTAL_BE.get(), AuroraPedestalBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.GOLDEN_CAULDRON_BE.get(), GoldenCauldronBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.SLAB_BE.get(), PedestalSlabBlockEntityRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.MY_MENU.get(), MyBlockScreen::new);
+
+            event.register(ModMenuTypes.ALCHE_FLAME_MENU.get(), AlcheFlameScreen::new);
         }
     }
 }

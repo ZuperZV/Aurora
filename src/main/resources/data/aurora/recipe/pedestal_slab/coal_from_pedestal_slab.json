@@ -1,0 +1,9 @@
+{
+  "type": "aurora:pedestal_slab",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "output": {
+    "item": "minecraft:coal"
+  }
+}

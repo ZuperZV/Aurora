@@ -1,0 +1,12 @@
+{
+  "type": "aurora:pedestal_slab_ring",
+  "ingredient": {
+    "item": "aurora:pedestal_slab"
+  },
+  "wire": {
+    "item": "aurora:aurora_dust"
+  },
+  "output": {
+    "item": "aurora:pedestal_slab"
+  }
+}

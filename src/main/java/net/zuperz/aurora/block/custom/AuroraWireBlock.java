@@ -12,6 +12,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -30,7 +32,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.fml.common.Mod;
 import net.zuperz.aurora.block.ModBlocks;
+import net.zuperz.aurora.item.ModItems;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -64,18 +68,6 @@ public class AuroraWireBlock extends Block {
                     Block.box(0.0, 0.0, 3.0, 13.0, 1.0, 13.0)
             )
     );
-    private static final Map<Direction, VoxelShape> SHAPES_UP = Maps.newEnumMap(
-            ImmutableMap.of(
-                    Direction.NORTH,
-                    Shapes.or(SHAPES_FLOOR.get(Direction.NORTH), Block.box(3.0, 0.0, 0.0, 13.0, 16.0, 1.0)),
-                    Direction.SOUTH,
-                    Shapes.or(SHAPES_FLOOR.get(Direction.SOUTH), Block.box(3.0, 0.0, 15.0, 13.0, 16.0, 16.0)),
-                    Direction.EAST,
-                    Shapes.or(SHAPES_FLOOR.get(Direction.EAST), Block.box(15.0, 0.0, 3.0, 16.0, 16.0, 13.0)),
-                    Direction.WEST,
-                    Shapes.or(SHAPES_FLOOR.get(Direction.WEST), Block.box(0.0, 0.0, 3.0, 1.0, 16.0, 13.0))
-            )
-    );
     private static final Map<BlockState, VoxelShape> SHAPES_CACHE = Maps.newHashMap();
     private static final Vec3[] COLORS = Util.make(new Vec3[16], p_154319_ -> {
         for (int i = 0; i <= 15; i++) {
@@ -89,6 +81,11 @@ public class AuroraWireBlock extends Block {
     private static final float PARTICLE_DENSITY = 0.2F;
     private final BlockState crossState;
     private boolean shouldSignal = true;
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+        return new ItemStack(ModItems.AURORA_DUST.get());
+    }
 
     @Override
     public MapCodec<RedStoneWireBlock> codec() {
@@ -126,8 +123,6 @@ public class AuroraWireBlock extends Block {
             RedstoneSide redstoneside = p_55643_.getValue(PROPERTY_BY_DIRECTION.get(direction));
             if (redstoneside == RedstoneSide.SIDE) {
                 voxelshape = Shapes.or(voxelshape, SHAPES_FLOOR.get(direction));
-            } else if (redstoneside == RedstoneSide.UP) {
-                voxelshape = Shapes.or(voxelshape, SHAPES_UP.get(direction));
             }
         }
 
@@ -178,6 +173,7 @@ public class AuroraWireBlock extends Block {
 
     private BlockState getMissingConnections(BlockGetter p_55609_, BlockState p_55610_, BlockPos p_55611_) {
         boolean flag = !p_55609_.getBlockState(p_55611_.above()).isRedstoneConductor(p_55609_, p_55611_);
+
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             if (!p_55610_.getValue(PROPERTY_BY_DIRECTION.get(direction)).isConnected()) {
@@ -254,13 +250,20 @@ public class AuroraWireBlock extends Block {
     private RedstoneSide getConnectingSide(BlockGetter p_55523_, BlockPos p_55524_, Direction p_55525_, boolean p_55526_) {
         BlockPos blockpos = p_55524_.relative(p_55525_);
         BlockState blockstate = p_55523_.getBlockState(blockpos);
+
+        if (blockstate.is(ModBlocks.UPPER_AURORA_PILLER)) {
+            return RedstoneSide.SIDE;
+        }
+        if (blockstate.is(ModBlocks.AURORA_PILLER)) {
+            return RedstoneSide.SIDE;
+        }
+
         if (p_55526_) {
             boolean flag = blockstate.getBlock() instanceof TrapDoorBlock || this.canSurviveOn(p_55523_, blockpos, blockstate);
             if (flag && p_55523_.getBlockState(blockpos.above()).canRedstoneConnectTo(p_55523_, blockpos.above(), null)) {
                 if (blockstate.isFaceSturdy(p_55523_, blockpos, p_55525_.getOpposite())) {
                     return RedstoneSide.UP;
                 }
-
                 return RedstoneSide.SIDE;
             }
         }
@@ -274,6 +277,7 @@ public class AuroraWireBlock extends Block {
             return p_55523_.getBlockState(blockPosBelow).canRedstoneConnectTo(p_55523_, blockPosBelow, null) ? RedstoneSide.SIDE : RedstoneSide.NONE;
         }
     }
+
 
     @Override
     protected boolean canSurvive(BlockState p_55585_, LevelReader p_55586_, BlockPos p_55587_) {

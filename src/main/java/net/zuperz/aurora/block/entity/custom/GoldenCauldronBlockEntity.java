@@ -7,19 +7,26 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.zuperz.aurora.block.custom.AuroraPedestalBlock;
+import net.zuperz.aurora.block.custom.GoldenCauldronBlock;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.level.Level;
 import net.zuperz.aurora.block.ModBlocks;
+
+import javax.swing.*;
 
 public class GoldenCauldronBlockEntity extends BlockEntity implements Container {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -160,52 +167,59 @@ public class GoldenCauldronBlockEntity extends BlockEntity implements Container 
     private void performCrafting(Level level, BlockPos pos) {
         ItemStack cauldronItem = this.getItem(0);
 
+        // List to store items from pedestals
         NonNullList<ItemStack> pedestalItems = NonNullList.create();
 
-        for (BlockPos pedestalPos : getPedestalPositions(pos)) {
+        // Manually check the items on the pedestals
+        BlockPos[] pedestalPositions = new BlockPos[]{
+                pos.offset(2, 0, 0),
+                pos.offset(-2, 0, 0),
+                pos.offset(0, 0, 2),
+                pos.offset(0, 0, -2)
+        };
+
+        // Collect items from pedestals
+        for (BlockPos pedestalPos : pedestalPositions) {
             BlockEntity entity = level.getBlockEntity(pedestalPos);
             if (entity instanceof AuroraPedestalBlockEntity pedestal) {
                 ItemStack pedestalItem = pedestal.getItem(0);
                 if (!pedestalItem.isEmpty()) {
                     pedestalItems.add(pedestalItem);
                 } else {
-                    return;
+                    return; // Abort if any pedestal is empty
                 }
             }
         }
 
+        // Proceed only if the cauldron contains an item and all pedestals have items
         if (!cauldronItem.isEmpty() && pedestalItems.size() == 4) {
-            ItemStack craftedItem = new ItemStack(ModItems.AURORA_SKULL.get());
+            // Example crafting logic (Replace this with your crafting logic)
+            ItemStack craftedItem = new ItemStack(ModItems.AURORA_SKULL.get()); // Replace with your crafted item
 
+            // Consume (delete) the cauldron item
             this.setItem(0, ItemStack.EMPTY);
 
-            // Update pedestal inventories
-            for (BlockPos pedestalPos : getPedestalPositions(pos)) {
-                BlockEntity entity = level.getBlockEntity(pedestalPos);
-                if (entity instanceof AuroraPedestalBlockEntity pedestal) {
-                    pedestal.setItem(0, ItemStack.EMPTY);
-                    pedestal.setChanged();
+            // Completely remove and replace each pedestal block
+            for (BlockPos pedestalPos : pedestalPositions) {
+                level.removeBlockEntity(pedestalPos); // Ensure this removes the block entity properly
+                level.setBlock(pedestalPos, Blocks.AIR.defaultBlockState(), 3); // Ensure this removes the block
+                level.sendBlockUpdated(pedestalPos, level.getBlockState(pedestalPos), Blocks.AIR.defaultBlockState(), 3);
 
-                    level.sendBlockUpdated(pedestalPos, pedestal.getBlockState(), pedestal.getBlockState(), 3);
-                }
+                // Place a new Aurora Pedestal block at the same position
+                level.setBlock(pedestalPos, ModBlocks.AURORA_PEDESTAL.get().defaultBlockState(), 3);
+
+                // Send a block update to ensure the client sees the change
+                level.sendBlockUpdated(pedestalPos, level.getBlockState(pedestalPos), level.getBlockState(pedestalPos), 3);
             }
 
+            // Place the crafted item in the cauldron
             this.setItem(0, craftedItem);
-            level.setBlock(pos, ModBlocks.GOLDEN_CAULDRON.get().defaultBlockState(), 3);
 
-            level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
-
+            // Update the cauldron's state
             this.setChanged();
-            level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), 3);
-
-            for (BlockPos offset : getOffsetsTwoBlocksAway()) {
-                BlockPos targetPos = pos.offset(offset);
-                BlockState state = level.getBlockState(targetPos);
-                level.sendBlockUpdated(targetPos, state, state, 3);
-            }
+            level.sendBlockUpdated(pos, this.getBlockState(), this.getBlockState(), 3);
         }
     }
-
 
     private BlockPos[] getOffsetsTwoBlocksAway() {
         return new BlockPos[]{

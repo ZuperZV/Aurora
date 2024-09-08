@@ -6,8 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
-import net.zuperz.aurora.block.entity.custom.AuroraPedestalBlockEntity;
-import net.zuperz.aurora.block.entity.custom.GoldenCauldronBlockEntity;
+import net.zuperz.aurora.block.entity.custom.*;
 
 import java.util.function.Supplier;
 
@@ -23,6 +22,18 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<GoldenCauldronBlockEntity>> GOLDEN_CAULDRON_BE =
             BLOCK_ENTITIES.register("golden_cauldron_be", () -> BlockEntityType.Builder.of(
                     GoldenCauldronBlockEntity::new, ModBlocks.GOLDEN_CAULDRON.get()).build(null));
+
+    public static final Supplier<BlockEntityType<PedestalSlabBlockEntity>> SLAB_BE =
+            BLOCK_ENTITIES.register("slab_be", () -> BlockEntityType.Builder.of(
+                    PedestalSlabBlockEntity::new, ModBlocks.PEDESTAL_SLAB.get()).build(null));
+
+    public static final Supplier<BlockEntityType<MyBlockTile>> MY_TILE =
+            BLOCK_ENTITIES.register("my_tile", () -> BlockEntityType.Builder.of(
+                    MyBlockTile::new, ModBlocks.MY_BLOCK.get()).build(null));
+
+    public static final Supplier<BlockEntityType<AlcheFlameBlockEntity>> ALCHE_FLAME_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("alche_flame_block_entity", () -> BlockEntityType.Builder.of(
+                    AlcheFlameBlockEntity::new, ModBlocks.ALCHE_FLAME.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

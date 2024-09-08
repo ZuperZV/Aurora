@@ -26,6 +26,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.AURORA_SKULL.get());
 
         basicItem(ModItems.AURORA_DUST.get());
+
+        basicItem(ModItems.CLAY_JAR.get());
+        basicItem(ModItems.SOFT_CLAY_JAR.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<Item> item) {

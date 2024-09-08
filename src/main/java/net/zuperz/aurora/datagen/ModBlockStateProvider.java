@@ -33,6 +33,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
         horizontalBlock(ModBlocks.GOLDEN_CAULDRON.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/golden_cauldron")));
 
+        horizontalBlock(ModBlocks.PEDESTAL_SLAB.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/pedestal_slab")));
+
+        horizontalBlock(ModBlocks.AURORA_PILLER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/aurora_piller")));
+
+        horizontalBlock(ModBlocks.UPPER_AURORA_PILLER.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/upper_aurora_piller")));
+
+        blockWithItem(ModBlocks.BLUESTONE);
+
+
     }
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock) {

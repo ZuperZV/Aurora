@@ -1,3 +1,9 @@
-// 1.21	2024-09-02T16:38:36.5820281	Block States: aurora
+// 1.21	2024-09-07T18:05:10.4145912	Block States: aurora
 5427fce86982f905d2fad39054cd1d2d17728403 assets/aurora/blockstates/aurora_pedestal.json
+06051385b675c827625b0af1b24ef2a7418a9e3e assets/aurora/blockstates/aurora_piller.json
+8867dbc904edbaeb3820318f1d2c358ff79085f0 assets/aurora/blockstates/bluestone.json
 fa73895bf1a368e780556d785ddf8729556482f2 assets/aurora/blockstates/golden_cauldron.json
+23496f737e31486cfe49f2f830d5875ca603b92f assets/aurora/blockstates/pedestal_slab.json
+cacfc4a40251149329e440fccad035023f8ab191 assets/aurora/blockstates/upper_aurora_piller.json
+b94b0366b9171eaf9af521c2664539df7414e017 assets/aurora/models/block/bluestone.json
+73cc3945a173bf93f3c2d77cefb821745d4924a0 assets/aurora/models/item/bluestone.json

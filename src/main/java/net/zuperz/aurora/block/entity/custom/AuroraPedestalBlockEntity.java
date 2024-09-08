@@ -31,9 +31,8 @@ public class AuroraPedestalBlockEntity extends BlockEntity implements Container 
 
     @Override
     public boolean isEmpty() {
-        for(int i = 0; i < getContainerSize(); i++) {
-            ItemStack stack = getItem(i);
-            if(!stack.isEmpty()) {
+        for (ItemStack stack : inventory) {
+            if (!stack.isEmpty()) {
                 return false;
             }
         }
@@ -42,39 +41,38 @@ public class AuroraPedestalBlockEntity extends BlockEntity implements Container 
 
     @Override
     public ItemStack getItem(int pSlot) {
-        setChanged();
         return inventory.get(pSlot);
     }
 
     @Override
     public ItemStack removeItem(int pSlot, int pAmount) {
-        setChanged();
         ItemStack stack = inventory.get(pSlot);
-        stack.shrink(pAmount);
-        return inventory.set(pSlot, stack);
+        if (stack.getCount() <= pAmount) {
+            inventory.set(pSlot, ItemStack.EMPTY);
+            return stack;
+        } else {
+            stack = stack.split(pAmount);
+            inventory.set(pSlot, stack);
+            return stack;
+        }
     }
 
     @Override
     public ItemStack removeItemNoUpdate(int pSlot) {
-        setChanged();
-        return ContainerHelper.takeItem(inventory, pSlot);
+        ItemStack stack = inventory.get(pSlot);
+        inventory.set(pSlot, ItemStack.EMPTY);
+        return stack;
     }
 
     @Override
     public void setItem(int pSlot, ItemStack pStack) {
-        setChanged(); // Notify that this block entity has changed
+        setChanged();
         if (pStack.isEmpty()) {
             inventory.set(pSlot, ItemStack.EMPTY);
         } else {
             inventory.set(pSlot, pStack.copy());
         }
-
-        // Notify the client to re-render this block entity
-        if (level != null && !level.isClientSide) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-        }
     }
-
 
 
     @Override
@@ -82,9 +80,14 @@ public class AuroraPedestalBlockEntity extends BlockEntity implements Container 
         return Container.stillValidBlockEntity(this, pPlayer);
     }
 
+
     @Override
     public void clearContent() {
         inventory.clear();
+        setChanged(); // Notify that this block entity has changed
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+        }
     }
 
     @Override
@@ -101,7 +104,7 @@ public class AuroraPedestalBlockEntity extends BlockEntity implements Container 
 
     public float getRenderingRotation() {
         rotation += 0.5f;
-        if(rotation >= 360) {
+        if (rotation >= 360) {
             rotation = 0;
         }
         return rotation;
@@ -110,11 +113,6 @@ public class AuroraPedestalBlockEntity extends BlockEntity implements Container 
     @Nullable
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        return saveWithoutMetadata(pRegistries);
+        return ClientboundBlockEntityDataPacket.create(this, BlockEntity::getUpdateTag);
     }
 }

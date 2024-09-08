@@ -27,6 +27,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.STAR_DUST.get());
                         pOutput.accept(ModBlocks.AURORA_PEDESTAL.get());
                         pOutput.accept(ModBlocks.GOLDEN_CAULDRON.get());
+                        pOutput.accept(ModBlocks.MY_BLOCK.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

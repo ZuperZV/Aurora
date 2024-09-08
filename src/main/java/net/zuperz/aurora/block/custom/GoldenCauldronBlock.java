@@ -27,6 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
+import net.zuperz.aurora.block.entity.custom.AuroraPedestalBlockEntity;
 import net.zuperz.aurora.block.entity.custom.GoldenCauldronBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -106,18 +107,20 @@ public class GoldenCauldronBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if(pLevel.getBlockEntity(pPos) instanceof GoldenCauldronBlockEntity GoldenCauldronBlockEntity) {
-            if(GoldenCauldronBlockEntity.isEmpty() && !pStack.isEmpty()) {
-                GoldenCauldronBlockEntity.setItem(0, pStack);
-                pStack.shrink(1);
-                pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
-            } else if(pStack.isEmpty()) {
-                ItemStack stackOnAuroraPedesta = GoldenCauldronBlockEntity.getItem(0);
-                pPlayer.setItemInHand(MAIN_HAND, stackOnAuroraPedesta);
-                GoldenCauldronBlockEntity.clearContent();
-                if(!pPlayer.getItemInHand(MAIN_HAND).isEmpty()) {
-                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+        if(pLevel.getBlockEntity(pPos) instanceof GoldenCauldronBlockEntity goldenCauldronBlockEntity) {
+            if (goldenCauldronBlockEntity.isEmpty()) {
+                if (!pStack.isEmpty()) {
+                    ItemStack itemToStore = pStack.copy();
+                    itemToStore.setCount(1);
+                    goldenCauldronBlockEntity.setItem(0, itemToStore);
+                    pStack.shrink(1);
+                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
                 }
+            } else if(pStack.isEmpty()) {
+                ItemStack stackOnPedestal = goldenCauldronBlockEntity.getItem(0);
+                pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
+                goldenCauldronBlockEntity.clearContent();
+                pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
             }
         }
         return ItemInteractionResult.SUCCESS;
@@ -136,5 +139,24 @@ public class GoldenCauldronBlock extends BaseEntityBlock {
                 GoldenCauldronBlockEntity.tick(pLevel1, pPos, pState1, pBlockEntity);
             }
         });
+    }
+
+    public static void clearPedestalItems(Level level, BlockPos pos) {
+        for (BlockPos pedestalPos : getPedestalPositions(pos)) {
+            BlockEntity entity = level.getBlockEntity(pedestalPos);
+            if (entity instanceof AuroraPedestalBlockEntity pedestal) {
+                pedestal.clearContent();
+                level.sendBlockUpdated(pedestalPos, pedestal.getBlockState(), pedestal.getBlockState(), 3);
+            }
+        }
+    }
+
+    private static BlockPos[] getPedestalPositions(BlockPos cauldronPos) {
+        return new BlockPos[]{
+                cauldronPos.offset(2, 0, 0),
+                cauldronPos.offset(-2, 0, 0),
+                cauldronPos.offset(0, 0, 2),
+                cauldronPos.offset(0, 0, -2)
+        };
     }
 }

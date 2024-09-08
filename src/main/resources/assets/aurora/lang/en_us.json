@@ -5,6 +5,8 @@
   "item.aurora.aurora_ingot": "Aurora Ingot",
   "item.aurora.aurora_skull": "Aurora Skull",
   "item.aurora.fate_blade": "Fate Blade",
-  "item.aurora.star_dust": "Star Dust"
+  "item.aurora.star_dust": "Star Dust",
 
+  "block.aurora.my_block": "My Block",
+  "block.aurora.alche_flame": "Alche Oven"
 }

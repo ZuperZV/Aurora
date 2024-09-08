@@ -24,19 +24,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildRecipes(RecipeOutput pWriter) {
 
-        /*SimpleCookingRecipeBuilder.blasting (Ingredient.of(ModItems.RESIN.get()), RecipeCategory.MISC , ModItems.AMBER.get(), 0.15f , 200)
-                .unlockedBy("has_resin",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.RESIN.get()).build()))
-                .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "resin"));
-         */
+        SimpleCookingRecipeBuilder.blasting (Ingredient.of(ModItems.SOFT_CLAY_JAR.get()), RecipeCategory.MISC , ModItems.CLAY_JAR.get(), 0.15f , 200)
+                .unlockedBy("has_soft_clay_jar",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.SOFT_CLAY_JAR.get()).build()))
+                .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "clay_jar_from_blasting"));
 
-        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SKRAP_AURORA.get())
-                .pattern("BBB")
+        SimpleCookingRecipeBuilder.smelting (Ingredient.of(ModItems.SOFT_CLAY_JAR.get()), RecipeCategory.MISC , ModItems.CLAY_JAR.get(), 0.15f , 200)
+                .unlockedBy("has_soft_clay_jar",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.SOFT_CLAY_JAR.get()).build()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOFT_CLAY_JAR.get())
                 .pattern(" A ")
-                .pattern(" A ")
-                .define('A', Items.STICK)
-                .define('B', ModItems.RESIN)
-                .unlockedBy("has_resin", has(ModItems.RESIN.get())).save(pWriter);
-         */
+                .pattern("AAA")
+                .pattern("AAA")
+                .define('A', Items.CLAY_BALL)
+                .unlockedBy("has_clay_ball", has(Items.CLAY_BALL)).save(pWriter);
     }
 
 

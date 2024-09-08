@@ -94,20 +94,30 @@ public class AuroraPedestalBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if(pLevel.getBlockEntity(pPos) instanceof AuroraPedestalBlockEntity AuroraPedestalBlockEntity) {
-            if(AuroraPedestalBlockEntity.isEmpty() && !pStack.isEmpty()) {
-                AuroraPedestalBlockEntity.setItem(0, pStack);
-                pStack.shrink(1);
-                pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
-            } else if(pStack.isEmpty()) {
-                ItemStack stackOnAuroraPedesta = AuroraPedestalBlockEntity.getItem(0);
-                pPlayer.setItemInHand(MAIN_HAND, stackOnAuroraPedesta);
-                AuroraPedestalBlockEntity.clearContent();
-                if(!pPlayer.getItemInHand(MAIN_HAND).isEmpty()) {
-                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+        if(pLevel.getBlockEntity(pPos) instanceof AuroraPedestalBlockEntity pedestalBlockEntity) {
+            if (pedestalBlockEntity.isEmpty()) {
+                if (!pStack.isEmpty()) {
+                    ItemStack itemToStore = pStack.copy();
+                    itemToStore.setCount(1);
+                    pedestalBlockEntity.setItem(0, itemToStore);
+                    pStack.shrink(1);
+                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
                 }
+            } else if(pStack.isEmpty()) {
+                ItemStack stackOnPedestal = pedestalBlockEntity.getItem(0);
+                pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
+                pedestalBlockEntity.clearContent();
+                pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
             }
         }
         return ItemInteractionResult.SUCCESS;
+    }
+
+    public static void clearPedestalItems(Level level, BlockPos pos) {
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (entity instanceof AuroraPedestalBlockEntity pedestal) {
+            pedestal.clearContent();
+            level.sendBlockUpdated(pos, pedestal.getBlockState(), pedestal.getBlockState(), 3);
+        }
     }
 }

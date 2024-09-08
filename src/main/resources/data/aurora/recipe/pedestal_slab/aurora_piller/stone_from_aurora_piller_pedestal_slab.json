@@ -1,0 +1,9 @@
+{
+  "type": "aurora:aurora_piller_pedestal_slab",
+  "ingredient": {
+    "item": "minecraft:dirt"
+  },
+  "output": {
+    "item": "minecraft:stone"
+  }
+}
