@@ -1,13 +1,18 @@
 package net.zuperz.aurora.block.entity.custom;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import com.google.common.collect.Maps;
+import net.minecraft.SharedConstants;
+import net.minecraft.Util;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -15,9 +20,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
@@ -30,8 +38,11 @@ import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.screen.AlcheFlameMenu;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+
+import static net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity.buildFuels;
 
 public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -47,6 +58,9 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
     private int progress = 0;
     private int maxProgress = 300;
 
+    private int fuelBurnTime = 0;
+    private int maxFuelBurnTime = 0;
+
     public AlcheFlameBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHE_FLAME_BLOCK_ENTITY.get(), pos, state);
         this.data = new ContainerData() {
@@ -55,6 +69,7 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
                 return switch (pIndex) {
                     case 0 -> AlcheFlameBlockEntity.this.progress;
                     case 1 -> AlcheFlameBlockEntity.this.maxProgress;
+                    case 2 -> AlcheFlameBlockEntity.this.fuelBurnTime;
                     default -> 0;
                 };
             }
@@ -64,12 +79,13 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
                 switch (pIndex) {
                     case 0 -> AlcheFlameBlockEntity.this.progress = pValue;
                     case 1 -> AlcheFlameBlockEntity.this.maxProgress = pValue;
+                    case 2 -> AlcheFlameBlockEntity.this.fuelBurnTime = pValue;
                 }
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
         };
     }
@@ -122,16 +138,13 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, inputItems.getStackInSlot(i));
         }
 
-        // Check for custom AlcheFlameRecipe
         Optional<RecipeHolder<AlcheFlameRecipe>> alcheRecipe = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.ALCHE_FLAME_RECIPE_TYPE.get(), getRecipeInput(inventory), level);
 
-        Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipe = serverLevel.getLevel()
-                .getRecipeManager()
-                .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(itemStack), level);
+        Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipe = level.getRecipeManager()
+                .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(inputItems.getStackInSlot(1)), level);
 
-        // Ensure there's space in the output and the recipes can proceed
-        return (alcheRecipe.isPresent() && canInsertAmountIntoOutputSlot(inventory)) ||
+        return (alcheRecipe.isPresent() && smeltingRecipe.isPresent() && canInsertAmountIntoOutputSlot(inventory)) ||
                 (smeltingRecipe.isPresent() && canInsertAmountIntoOutputSlot(inventory));
     }
 
@@ -169,20 +182,18 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, inputItems.getStackInSlot(i));
         }
 
-        // Check for custom AlcheFlameRecipe
         Optional<RecipeHolder<AlcheFlameRecipe>> alcheRecipeOptional = level.getRecipeManager()
                 .getRecipeFor(ModRecipes.ALCHE_FLAME_RECIPE_TYPE.get(), getRecipeInput(inventory), level);
 
-        // Check for vanilla SmeltingRecipe
         Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipeOptional = serverLevel.getLevel()
                 .getRecipeManager()
-                .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(itemStack), level);
+                .getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(inputItems.getStackInSlot(1)), level);
 
-        if (alcheRecipeOptional.isPresent()) {
+        if (alcheRecipeOptional.isPresent() && smeltingRecipeOptional.isPresent()) {
             AlcheFlameRecipe recipe = alcheRecipeOptional.get().value();
             ItemStack result = recipe.getResultItem(level.registryAccess());
 
-            // Add result to output slot
+            // Legg resultatet til i output-spor
             ItemStack outputStack = outputItems.getStackInSlot(0);
             if (outputStack.isEmpty()) {
                 outputItems.setStackInSlot(0, result.copy());
@@ -190,22 +201,24 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
                 outputStack.grow(result.getCount());
             }
 
-            inputItems.extractItem(0, 1, false); // Remove the input item
-        } else if (smeltingRecipeOptional.isPresent()) {
+            inputItems.extractItem(0, 1, false);
+        }
+
+        if (smeltingRecipeOptional.isPresent()) {
             SmeltingRecipe smeltingRecipe = smeltingRecipeOptional.get().value();
             ItemStack result = smeltingRecipe.getResultItem(level.registryAccess());
 
-            // Add smelting result to output slot
-            ItemStack outputStack = outputItems.getStackInSlot(0);
+            ItemStack outputStack = outputItems.getStackInSlot(1);
             if (outputStack.isEmpty()) {
-                outputItems.setStackInSlot(0, result.copy());
+                outputItems.setStackInSlot(1, result.copy());
             } else if (outputStack.getItem() == result.getItem()) {
                 outputStack.grow(result.getCount());
             }
 
-            inputItems.extractItem(0, 1, false); // Remove the input item
+            inputItems.extractItem(1, 1, false);
         }
     }
+
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -296,4 +309,3 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
         return Component.translatable("block.aurora.alche_flame");
     }
 }
-

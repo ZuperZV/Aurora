@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aurora:block/alche_flame",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aurora:block/alche_flame"
+    },
+    "facing=south": {
+      "model": "aurora:block/alche_flame",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aurora:block/alche_flame",
+      "y": 270
+    }
+  }
+}

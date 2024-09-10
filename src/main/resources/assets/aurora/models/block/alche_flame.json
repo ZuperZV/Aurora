@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "aurora:block/alche_flame_front",
+    "side": "aurora:block/alche_flame_side",
+    "top": "aurora:block/alche_flame_top"
+  }
+}

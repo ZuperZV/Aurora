@@ -76,6 +76,6 @@ public class UpperAuroraPiller extends BarrierBlock {
 
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return new ItemStack(ModBlocks.UPPER_AURORA_PILLER.get());
+        return new ItemStack(ModBlocks.AURORA_PILLER.get());
     }
 }
