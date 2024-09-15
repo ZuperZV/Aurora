@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.zuperz.aurora.aurora;
 
@@ -41,7 +42,11 @@ public class AlcheFlameScreen extends AbstractContainerScreen<AlcheFlameMenu> {
 
         // Render progress arrow/bar
         int progressArrowWidth = menu.getScaledProgress();
-        guiGraphics.blit(TEXTURE, x + 73, y + 35, 176, 0, progressArrowWidth, 15);
+        guiGraphics.blit(TEXTURE, x + 73, y + 21, 176, 0, progressArrowWidth, 15);
+
+        // Render fuel burn time indicator (flame)
+        int scaledFuel = menu.getScaledFuelBurnTime();
+        guiGraphics.blit(TEXTURE, x + 49, y + 38, 199, 0, 14, scaledFuel);
     }
 
     @Override

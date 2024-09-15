@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:blast_furnace"
+    },
+    "B": {
+      "item": "minecraft:deepslate"
+    },
+    "C": {
+      "item": "aurora:clay_jar"
+    },
+    "D": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "EBE",
+    "CAC",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aurora:alche_flame"
+  }
+}

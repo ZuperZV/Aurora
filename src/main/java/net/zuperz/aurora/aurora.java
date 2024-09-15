@@ -1,15 +1,20 @@
 package net.zuperz.aurora;
 
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.zuperz.aurora.Recipes.ModRecipes;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
+import net.zuperz.aurora.block.entity.renderer.AlterBlockEntityRenderer;
 import net.zuperz.aurora.block.entity.renderer.AuroraPedestalBlockEntityRenderer;
 import net.zuperz.aurora.block.entity.renderer.GoldenCauldronBlockEntityRenderer;
 import net.zuperz.aurora.block.entity.renderer.PedestalSlabBlockEntityRenderer;
+import net.zuperz.aurora.events.ModEvents;
 import net.zuperz.aurora.item.ModCreativeModeTabs;
 import net.zuperz.aurora.item.ModItems;
+import net.zuperz.aurora.item.custom.decorator.NumberBarDecorator;
 import net.zuperz.aurora.screen.AlcheFlameScreen;
 import net.zuperz.aurora.screen.ModMenuTypes;
 import net.zuperz.aurora.screen.MyBlockScreen;
@@ -36,6 +41,7 @@ public class aurora {
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public aurora(IEventBus modEventBus) {
+        ModEvents.registerEvents();
 
         ModCreativeModeTabs.register(modEventBus);
 
@@ -55,9 +61,6 @@ public class aurora {
 
         // Register the item to a creative tab
         //modEventBus.addListener(this::addCreative);
-
-        // Register the commonSetup method for modloading
-        //modEventBus.addListener(this::commonSetup);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -75,15 +78,16 @@ public class aurora {
         });
     }
      */
-
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.AURORA_PEDESTAL_BE.get(), AuroraPedestalBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.GOLDEN_CAULDRON_BE.get(), GoldenCauldronBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.SLAB_BE.get(), PedestalSlabBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.ALTER_BE.get(), AlterBlockEntityRenderer::new);
         }
 
         @SubscribeEvent
@@ -91,6 +95,11 @@ public class aurora {
             event.register(ModMenuTypes.MY_MENU.get(), MyBlockScreen::new);
 
             event.register(ModMenuTypes.ALCHE_FLAME_MENU.get(), AlcheFlameScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
+            event.register(ModItems.SKULL_TWIG.get(), new NumberBarDecorator());
         }
     }
 }

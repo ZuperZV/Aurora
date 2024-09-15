@@ -16,10 +16,12 @@ public class AlcheFlameRecipe implements Recipe<RecipeInput> {
 
     public final ItemStack output;
     public final Ingredient ingredient0;
+    public final Ingredient ingredientFurnace;
 
-    public AlcheFlameRecipe(ItemStack output, Ingredient ingredient0) {
+    public AlcheFlameRecipe(ItemStack output, Ingredient ingredient0, Ingredient ingredientfurnace) {
         this.output = output;
         this.ingredient0 = ingredient0;
+        this.ingredientFurnace = ingredientfurnace;
     }
     @Override
     public ItemStack assemble(RecipeInput container, HolderLookup.Provider registries) {
@@ -41,7 +43,7 @@ public class AlcheFlameRecipe implements Recipe<RecipeInput> {
         if(pLevel.isClientSide()) {
             return false;
         }
-        return ingredient0.test(pContainer.getItem(0));
+        return ingredient0.test(pContainer.getItem(0)) && ingredientFurnace.test(pContainer.getItem(1));
     }
     @Override
     public boolean isSpecial() {
@@ -49,8 +51,9 @@ public class AlcheFlameRecipe implements Recipe<RecipeInput> {
     }
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> ingredients = NonNullList.createWithCapacity(1);
+        NonNullList<Ingredient> ingredients = NonNullList.createWithCapacity(2);
         ingredients.add(0, ingredient0);
+        ingredients.add(1, ingredientFurnace);
         return ingredients;
     }
     @Override
@@ -88,6 +91,8 @@ public class AlcheFlameRecipe implements Recipe<RecipeInput> {
                 return recipe.output;
             }), Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter((recipe) -> {
                 return recipe.ingredient0;
+            }), Ingredient.CODEC_NONEMPTY.fieldOf("furnace_ingredient").forGetter((recipe) -> {
+                return recipe.ingredientFurnace;
             })).apply(instance, AlcheFlameRecipe::new);
         });
 
@@ -106,13 +111,15 @@ public class AlcheFlameRecipe implements Recipe<RecipeInput> {
 
         private static AlcheFlameRecipe read(RegistryFriendlyByteBuf  buffer) {
             Ingredient input0 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+            Ingredient input1 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             ItemStack output = ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer);
 
-            return new AlcheFlameRecipe(output, input0);
+            return new AlcheFlameRecipe(output, input0 , input1);
         }
 
         private static void write(RegistryFriendlyByteBuf  buffer, AlcheFlameRecipe recipe) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient0);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredientFurnace);
             ItemStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.output);
         }
     }

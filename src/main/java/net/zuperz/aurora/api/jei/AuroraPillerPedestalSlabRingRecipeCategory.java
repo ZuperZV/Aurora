@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.zuperz.aurora.Recipes.AuroraPillerPedestalSlabRingRecipe;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
+import net.zuperz.aurora.item.ModItems;
 import org.jetbrains.annotations.NotNull;
 
 public class AuroraPillerPedestalSlabRingRecipeCategory implements IRecipeCategory<AuroraPillerPedestalSlabRingRecipe> {
@@ -35,7 +36,7 @@ public class AuroraPillerPedestalSlabRingRecipeCategory implements IRecipeCatego
     public AuroraPillerPedestalSlabRingRecipeCategory(IGuiHelper helper) {
 
         this.background = helper.createBlankDrawable(100, 60);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PEDESTAL_SLAB.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItems.AURORA_DUST.get()));
 
         this.slot_1 = helper.drawableBuilder(SLOT, 0, 18, 18, 18).setTextureSize(18, 18).addPadding(33,0,17,0).build();
 

@@ -19,6 +19,7 @@ import net.zuperz.aurora.Recipes.PedestalSlabRingRecipe;
 import net.zuperz.aurora.Recipes.PedestalSlabRingRecipe;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
+import net.zuperz.aurora.item.ModItems;
 import org.jetbrains.annotations.NotNull;
 
 public class PedestalSlabRingRecipeCategory implements IRecipeCategory<PedestalSlabRingRecipe> {
@@ -36,7 +37,7 @@ public class PedestalSlabRingRecipeCategory implements IRecipeCategory<PedestalS
     public PedestalSlabRingRecipeCategory(IGuiHelper helper) {
 
         this.background = helper.createBlankDrawable(100, 60);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PEDESTAL_SLAB.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItems.AURORA_DUST.get()));
 
         this.slot_1_Ring = helper.drawableBuilder(SLOT, 0, 18, 18, 18).setTextureSize(18, 18).addPadding(31,0,41,0).build();
 

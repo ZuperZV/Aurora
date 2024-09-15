@@ -3,18 +3,20 @@ package net.zuperz.aurora.item.custom;
 import net.minecraft.world.item.Item;
 
 public class AuroraSkullItem extends Item {
-    private int Number;
+    private int number;
 
     public AuroraSkullItem(int startValue, Item.Properties properties) {
         super(properties);
-        this.Number = startValue;
+        this.number = startValue;
     }
 
+    // Method to set the value for this instance
     public void setValue(int newValue) {
-        this.Number = newValue;
+        this.number = newValue;
     }
 
+    // Method to get the value for this instance
     public int getValue() {
-        return this.Number;
+        return this.number;
     }
 }

@@ -51,8 +51,6 @@ public class AlcheFlameMenu extends AbstractContainerMenu {
         this.blockentity = alcheFlameBlockEntity;
     }
 
-
-
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(blockentity.getLevel(), blockentity.getBlockPos()), player, ModBlocks.ALCHE_FLAME.get());
@@ -107,7 +105,17 @@ public class AlcheFlameMenu extends AbstractContainerMenu {
         int progressArrowSize = 22;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+
     }
+
+    public int getScaledFuelBurnTime() {
+        int fuelBurnTime = blockentity.data.get(2);
+        int maxFuelBurnTime = blockentity.getMaxFuelBurnTime();
+        int fuelBarHeight = 14;
+
+        return maxFuelBurnTime != 0 && fuelBurnTime != 0 ? fuelBurnTime * fuelBarHeight / maxFuelBurnTime : 0;
+    }
+
 
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {

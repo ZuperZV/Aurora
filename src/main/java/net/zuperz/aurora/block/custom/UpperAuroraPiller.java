@@ -26,28 +26,13 @@ public class UpperAuroraPiller extends BarrierBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final double SIZE = 5.0;
     VoxelShape SHAPE = Shapes.or(
-            // First shape from [0, -16, 0] to [16, -13, 16]
             box(0.0, -16.0, 0.0, 16.0, -13.0, 16.0),
-
-            // Second shape from [0, -11, 0] to [16, -7, 16]
             box(0.0, -11.0, 0.0, 16.0, -7.0, 16.0),
-
-            // Third shape from [0.5, -11.75, 6.5] to [15.5, -7.75, 9.5]
             box(0.5, -11.75, 6.5, 15.5, -6.75, 9.5),
-
-            // Fourth shape from [6.5, -11.75, 0.5] to [9.5, -7.75, 15.5]
             box(6.5, -11.75, 0.5, 9.5, -7.75, 15.5),
-
-            // Fifth shape from [1.0, -13.0, 1.0] to [15.0, -10.0, 15.0]
             box(1.0, -13.0, 1.0, 15.0, -10.0, 15.0),
-
-            // Sixth shape from [3.0, 1.0, 3.0] to [13.0, 9.0, 13.0]
             box(3.0, 1.0, 3.0, 13.0, 9.0, 13.0),
-
-            // Seventh shape from [2.0, -7.0, 2.0] to [14.0, 1.0, 14.0]
             box(2.0, -7.0, 2.0, 14.0, 1.0, 14.0),
-
-            // Eighth shape from [4.0, 9.0, 4.0] to [12.0, 16.0, 12.0]
             box(4.0, 9.0, 4.0, 12.0, 16.0, 12.0)
     );
 

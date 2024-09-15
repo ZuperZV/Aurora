@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "minecraft:flint_and_steel"
+  },
+  "ingredient2": {
+    "item": "minecraft:flint_and_steel"
+  },
+  "ingredient3": {
+    "item": "minecraft:flint_and_steel"
+  },
+  "ingredient4": {
+    "item": "minecraft:flint_and_steel"
+  },
+  "ingredient5": {
+    "item": "aurora:twig"
+  },
+  "output": {
+    "item": "aurora:beam"
+  }
+}

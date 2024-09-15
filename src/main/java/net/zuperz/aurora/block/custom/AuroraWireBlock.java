@@ -2,18 +2,14 @@ package net.zuperz.aurora.block.custom;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -32,13 +28,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.fml.common.Mod;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.item.ModItems;
 
 import javax.annotation.Nullable;
 import java.util.Map;
-import java.util.Set;
 
 public class AuroraWireBlock extends Block {
     public static final MapCodec<RedStoneWireBlock> CODEC = simpleCodec(RedStoneWireBlock::new);
@@ -391,7 +385,11 @@ public class AuroraWireBlock extends Block {
     protected static boolean shouldConnectTo(BlockState p_55595_, @Nullable Direction p_55596_) {
         if (p_55595_.is(ModBlocks.AURORA_WIRE.get())) {
             return true;
-        } else {
+        }
+        if (p_55595_.is(ModBlocks.CLAY_WIRE.get())) {
+            return true;
+        }
+        else {
             return p_55595_.is(Blocks.OBSERVER) ? p_55596_ == p_55595_.getValue(ObserverBlock.FACING) : p_55595_.isSignalSource() && p_55596_ != null;
         }
     }

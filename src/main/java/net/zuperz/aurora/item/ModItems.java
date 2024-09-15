@@ -2,15 +2,15 @@ package net.zuperz.aurora.item;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.item.custom.AuroraSkullItem;
+import net.zuperz.aurora.item.custom.SaplingClayJarItem;
+import net.zuperz.aurora.item.custom.StoneSkullTwig;
+import net.zuperz.aurora.item.custom.TwigItem;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS =
@@ -34,6 +34,18 @@ public class ModItems {
     public static final DeferredItem<Item> AURORA_DUST = ITEMS.register("aurora_dust",
             () -> new ItemNameBlockItem(ModBlocks.AURORA_WIRE.get(), new Item.Properties()));
 
+    public static final DeferredItem<Item> CLAY_DUST = ITEMS.register("clay_dust",
+            () -> new ItemNameBlockItem(ModBlocks.CLAY_WIRE.get(), new Item.Properties()));
+
+    public static final DeferredItem<Item> HARD_CLAY_BALL = ITEMS.register("hard_clay_ball",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> TWIG = ITEMS.register("twig",
+            () -> new TwigItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> SKULL_TWIG = ITEMS.register("skull_twig",
+            () -> new StoneSkullTwig(new Item.Properties().stacksTo(1)));
+
     public static final DeferredItem<Item> BLUESTONE_DUST = ITEMS.register("bluestone_dust",
             () -> new Item(new Item.Properties()));
 
@@ -41,6 +53,15 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> CLAY_JAR = ITEMS.register("clay_jar",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> SAPLING_CLAY_JAR = ITEMS.register("sapling_clay_jar",
+            () -> new SaplingClayJarItem(new Item.Properties().fireResistant()));
+
+    public static final DeferredItem<Item> FIRE_CLAY_JAR = ITEMS.register("fire_clay_jar",
+            () -> new SaplingClayJarItem(new Item.Properties().fireResistant()));
+
+    public static final DeferredItem<Item> TWIG_CLAY_JAR = ITEMS.register("twig_clay_jar",
             () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

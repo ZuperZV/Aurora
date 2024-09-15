@@ -5,12 +5,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.zuperz.aurora.aurora;
+import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.item.ModItems;
 
 import java.util.List;
@@ -32,12 +36,47 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_soft_clay_jar",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.SOFT_CLAY_JAR.get()).build()))
                 .save(pWriter);
 
+        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", "saplings")))), RecipeCategory.MISC , Items.CHARCOAL, 0.15f , 200)
+                .unlockedBy("has_sapling",inventoryTrigger(ItemPredicate.Builder.item().of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", "saplings"))).build()))
+                .save(pWriter);
+
+        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ModItems.TWIG)), RecipeCategory.MISC , Items.CHARCOAL, 0.15f , 200)
+                .unlockedBy("has_twig",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.TWIG).build()))
+                .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "charcoal_from_twig"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOFT_CLAY_JAR.get())
                 .pattern(" A ")
                 .pattern("AAA")
                 .pattern("AAA")
                 .define('A', Items.CLAY_BALL)
                 .unlockedBy("has_clay_ball", has(Items.CLAY_BALL)).save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.ALCHE_FLAME.get())
+                .pattern("EBE")
+                .pattern("CAC")
+                .pattern("DDD")
+                .define('A', Blocks.BLAST_FURNACE)
+                .define('B', Blocks.DEEPSLATE)
+                .define('C', ModItems.CLAY_JAR)
+                .define('D', Items.IRON_INGOT)
+                .define('E', Blocks.STONE)
+                .unlockedBy("has_blast_furnace", has(Blocks.BLAST_FURNACE)).save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.PEDESTAL_SLAB.get())
+                .pattern("CDC")
+                .pattern("ABA")
+                .define('A', ModItems.FIRE_CLAY_JAR)
+                .define('B', Blocks.DEEPSLATE)
+                .define('C', Blocks.DEEPSLATE_BRICKS)
+                .define('D', Blocks.POLISHED_DEEPSLATE)
+                .unlockedBy("has_blast_furnace", has(Blocks.BLAST_FURNACE)).save(pWriter);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CLAY_DUST.get())
+                .requires(ModItems.HARD_CLAY_BALL.get())
+                .requires(Items.WATER_BUCKET)
+                .unlockedBy("has_hard_clay_ball", inventoryTrigger(ItemPredicate.Builder.item().
+                        of(ModItems.HARD_CLAY_BALL.get()).build()))
+                .save(pWriter);
     }
 
 

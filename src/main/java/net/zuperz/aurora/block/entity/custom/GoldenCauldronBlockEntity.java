@@ -240,3 +240,9 @@ public class GoldenCauldronBlockEntity extends BlockEntity implements Container 
         };
     }
 }
+
+
+/*
+
+kan du få GoldenCauldron til at være en block entity der skal bruge at der er en beam block og når man hojerkliker på der hvro der skal være en beam block skal den putte itemet i slot 1 og der skal være 4 beam blocks og når der er 4 forskelige items kan du få den til at crafte
+ */

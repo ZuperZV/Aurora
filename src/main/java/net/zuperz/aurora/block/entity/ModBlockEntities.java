@@ -27,6 +27,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("slab_be", () -> BlockEntityType.Builder.of(
                     PedestalSlabBlockEntity::new, ModBlocks.PEDESTAL_SLAB.get()).build(null));
 
+    public static final Supplier<BlockEntityType<AlterBlockEntity>> ALTER_BE =
+            BLOCK_ENTITIES.register("alter_be", () -> BlockEntityType.Builder.of(
+                    AlterBlockEntity::new, ModBlocks.ALTER_SLAB.get()).build(null));
+
     public static final Supplier<BlockEntityType<MyBlockTile>> MY_TILE =
             BLOCK_ENTITIES.register("my_tile", () -> BlockEntityType.Builder.of(
                     MyBlockTile::new, ModBlocks.MY_BLOCK.get()).build(null));

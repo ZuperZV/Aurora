@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
@@ -37,7 +38,10 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.PEDESTAL_SLAB.get());
         dropSelf(ModBlocks.MY_BLOCK.get());
 
+        dropSelf(ModBlocks.ALCHE_FLAME.get());
+
         dropSelf(ModBlocks.AURORA_PILLER.get());
+        dropSelf(ModBlocks.BEAM.get());
 
         this.add(ModBlocks.AURORA_WIRE.get(),
                 block -> LootTable.lootTable()
@@ -46,12 +50,27 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                                 .add(LootItem.lootTableItem(ModItems.AURORA_DUST.get()))
                         )
         );
+        this.add(ModBlocks.CLAY_WIRE.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModItems.CLAY_DUST.get()))
+                        )
+        );
 
         this.add(ModBlocks.UPPER_AURORA_PILLER.get(),
                 block -> LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModBlocks.AURORA_PILLER.get()))
+                        )
+        );
+
+        this.add(ModBlocks.UPPER_BEAM.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModBlocks.BEAM.get()))
                         )
         );
 

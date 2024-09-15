@@ -42,9 +42,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         horizontalBlock(ModBlocks.UPPER_AURORA_PILLER.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/upper_aurora_piller")));
 
+        horizontalBlock(ModBlocks.BEAM.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/beam")));
+
+        horizontalBlock(ModBlocks.UPPER_BEAM.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/upper_beam")));
+
         blockWithItem(ModBlocks.BLUESTONE);
-
-
+        blockWithItem(ModBlocks.STONE_SKULL_STONE);
     }
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock) {

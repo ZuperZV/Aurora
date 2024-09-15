@@ -29,17 +29,26 @@ public class ModRecipes {
     public static final Supplier<RecipeType<PedestalSlabRecipe>> PEDESTAL_SLAB_RECIPE_TYPE =
             RECIPE_TYPES.register("pedestal_slab", () -> PedestalSlabRecipe.Type.INSTANCE);
 
+    public static final Supplier<RecipeType<PedestalSlabClayRecipe>> PEDESTAL_SLAB_CLAY_RECIPE_TYPE =
+            RECIPE_TYPES.register("pedestal_slab_clay", () -> PedestalSlabClayRecipe.Type.INSTANCE);
+
     public static final Supplier<RecipeType<AuroraPillerPedestalSlabRecipe>> AURORA_PILLER_RECIPE_TYPE =
             RECIPE_TYPES.register("aurora_piller_pedestal_slab", () -> AuroraPillerPedestalSlabRecipe.Type.INSTANCE);
 
     public static final Supplier<RecipeType<PedestalSlabRingRecipe>> PEDESTAL_SLAB_RING_RECIPE_TYPE =
             RECIPE_TYPES.register("pedestal_slab_ring", () -> PedestalSlabRingRecipe.Type.INSTANCE);
 
+    public static final Supplier<RecipeType<PedestalSlabClayRingRecipe>> PEDESTAL_SLAB_CLAY_RING_RECIPE_TYPE =
+            RECIPE_TYPES.register("pedestal_slab_clay_ring", () -> PedestalSlabClayRingRecipe.Type.INSTANCE);
+
     public static final Supplier<RecipeType<AuroraPillerPedestalSlabRingRecipe>> AURORA_PILLER_PEDESTAL_SLAB_RING_RECIPE_TYPE =
             RECIPE_TYPES.register("aurora_piller_pedestal_slab_ring", () -> AuroraPillerPedestalSlabRingRecipe.Type.INSTANCE);
 
     public static final Supplier<RecipeType<BlockInWoldRecipe>> IND_WOLD_BLOCK_RECIPE_TYPE =
             RECIPE_TYPES.register("ind_wold_block", () -> BlockInWoldRecipe.Type.INSTANCE);
+
+    public static final Supplier<RecipeType<AlterRecipe>> ALTER_RECIPE_TYPE =
+            RECIPE_TYPES.register("alter", () -> AlterRecipe.Type.INSTANCE);
 
 
 
@@ -52,8 +61,14 @@ public class ModRecipes {
     public static final Supplier<RecipeSerializer<PedestalSlabRecipe>> PEDESTAL_SLAB_SERIALIZER =
             SERIALIZERS.register("pedestal_slab", () -> PedestalSlabRecipe.Serializer.INSTANCE);
 
+    public static final Supplier<RecipeSerializer<PedestalSlabClayRecipe>> PEDESTAL_SLAB_CLAY_SERIALIZER =
+            SERIALIZERS.register("pedestal_slab_clay", () -> PedestalSlabClayRecipe.Serializer.INSTANCE);
+
     public static final Supplier<RecipeSerializer<AuroraPillerPedestalSlabRecipe>> AURORA_PILLER_SLAB_SERIALIZER =
             SERIALIZERS.register("aurora_piller_pedestal_slab", () -> AuroraPillerPedestalSlabRecipe.Serializer.INSTANCE);
+
+    public static final Supplier<RecipeSerializer<PedestalSlabClayRingRecipe>> PEDESTAL_SLAB_CLAY_RING_SERIALIZER =
+            SERIALIZERS.register("pedestal_slab_clay_ring", () -> PedestalSlabClayRingRecipe.Serializer.INSTANCE);
 
     public static final Supplier<RecipeSerializer<PedestalSlabRingRecipe>> PEDESTAL_SLAB_RING_SERIALIZER =
             SERIALIZERS.register("pedestal_slab_ring", () -> PedestalSlabRingRecipe.Serializer.INSTANCE);
@@ -63,4 +78,7 @@ public class ModRecipes {
 
     public static final Supplier<RecipeSerializer<BlockInWoldRecipe>> IND_WOLD_BLOCK_SERIALIZER =
             SERIALIZERS.register("in_world_block", () -> BlockInWoldRecipe.Serializer.INSTANCE);
+
+    public static final Supplier<RecipeSerializer<AlterRecipe>> ALTER_SERIALIZER =
+            SERIALIZERS.register("alter", () -> AlterRecipe.Serializer.INSTANCE);
 }

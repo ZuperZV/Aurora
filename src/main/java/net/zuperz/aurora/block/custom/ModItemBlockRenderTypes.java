@@ -18,5 +18,9 @@ public class ModItemBlockRenderTypes {
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.AURORA_WIRE.get(), RenderType.cutout());
         });
+
+        event.enqueueWork(() -> {
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.CLAY_WIRE.get(), RenderType.cutout());
+        });
     }
 }

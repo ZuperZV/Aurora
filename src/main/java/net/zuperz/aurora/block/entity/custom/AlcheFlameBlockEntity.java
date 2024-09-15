@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
@@ -42,8 +42,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import static net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity.buildFuels;
-
 public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
 
     private final ItemStackHandler inputItems = createItemHandler(3);
@@ -53,13 +51,13 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
     private final Lazy<IItemHandler> inputItemHandler = Lazy.of(() -> new CustomItemHandler(inputItems));
     private final Lazy<IItemHandler> outputItemHandler = Lazy.of(() -> new CustomItemHandler(outputItems));
 
-    private int myInt = 0;
-    public final ContainerData data;
     private int progress = 0;
     private int maxProgress = 300;
 
     private int fuelBurnTime = 0;
-    private int maxFuelBurnTime = 0;
+    private int maxFuelBurnTime = 1000;
+
+    public final ContainerData data;
 
     public AlcheFlameBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALCHE_FLAME_BLOCK_ENTITY.get(), pos, state);
@@ -90,46 +88,55 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-    public void tick() {
-        Random r = new Random();
-        increaseCraftingProcess();
-        myInt = r.nextInt(0, 10);
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+    public static void tick(Level level, BlockPos pos, BlockState state, AlcheFlameBlockEntity blockEntity) {
+        boolean dirty = false;
 
-        if (hasRecipe(this, (ServerLevel) level, inputItems.getStackInSlot(0))) {
-            increaseCraftingProcess();
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+        if (blockEntity.fuelBurnTime > 0) {
+            blockEntity.fuelBurnTime--;
+        }
 
-            if (hasProgressFinished()) {
-                craftItem(this, inputItems.getStackInSlot(0));
-                resetProgress();
+        if (blockEntity.fuelBurnTime == 0 && blockEntity.canConsumeFuel()) {
+            blockEntity.fuelBurnTime = blockEntity.getFuelBurnTime(blockEntity.inputItems.getStackInSlot(2));
+            if (blockEntity.fuelBurnTime > 0) {
+                dirty = true;
+                ItemStack fuelStack = blockEntity.inputItems.extractItem(2, 1, false);
             }
+        }
+
+        if (blockEntity.fuelBurnTime > 0 && blockEntity.hasRecipe()) {
+            blockEntity.progress++;
+            if (blockEntity.progress >= blockEntity.maxProgress) {
+                blockEntity.craftItem(blockEntity);
+                blockEntity.progress = 0;
+                dirty = true;
+            }
+            dirty = true;
         } else {
-            resetProgress();
+            if (blockEntity.progress != 0) {
+                blockEntity.progress = Math.max(blockEntity.progress - 2, 0);
+                dirty = true;
+            }
+        }
+
+        if (dirty) {
+            blockEntity.setChanged();
+            level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
         }
     }
 
-    private boolean hasProgressFinished() {
-        return this.progress >= this.maxProgress;
+    private boolean canConsumeFuel() {
+        return isFuel(this.inputItems.getStackInSlot(2));
     }
 
-    private void increaseCraftingProcess() {
-        this.progress++;
-    }
-
-    public void dropItems() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.get().getSlots());
-        for (int i = 0; i < itemHandler.get().getSlots(); i++) {
-            inventory.setItem(i, itemHandler.get().getStackInSlot(i));
+    private int getFuelBurnTime(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return 0;
+        } else {
+            return stack.getBurnTime(null);
         }
-        Containers.dropContents(level, worldPosition, inventory);
     }
 
-    private void resetProgress() {
-        this.progress = 0;
-    }
-
-    private boolean hasRecipe(BlockEntity blockEntity, ServerLevel serverLevel, ItemStack itemStack) {
+    private boolean hasRecipe() {
         Level level = this.level;
         if (level == null) return false;
 
@@ -148,7 +155,6 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
                 (smeltingRecipe.isPresent() && canInsertAmountIntoOutputSlot(inventory));
     }
 
-
     private RecipeInput getRecipeInput(SimpleContainer inventory) {
         return new RecipeInput() {
             @Override
@@ -164,16 +170,16 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory) {
-        ItemStack outputStack = outputItems.getStackInSlot(0);
-        return outputStack.getMaxStackSize() > outputStack.getCount();
+        ItemStack outputStack1 = outputItems.getStackInSlot(0);
+        ItemStack outputStack2 = outputItems.getStackInSlot(1);
+
+        boolean canInsertIntoFirstSlot = outputStack1.isEmpty() || (outputStack1.getCount() < outputStack1.getMaxStackSize());
+        boolean canInsertIntoSecondSlot = outputStack2.isEmpty() || (outputStack2.getCount() < outputStack2.getMaxStackSize());
+
+        return canInsertIntoFirstSlot && canInsertIntoSecondSlot;
     }
 
-    private boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {
-        ItemStack outputStack = outputItems.getStackInSlot(0);
-        return outputStack.isEmpty() || (outputStack.getItem() == stack.getItem() && outputStack.getCount() < stack.getMaxStackSize());
-    }
-
-    private void craftItem(AlcheFlameBlockEntity serverLevel, ItemStack itemStack) {
+    private void craftItem(AlcheFlameBlockEntity serverLevel) {
         Level level = this.level;
         if (level == null) return;
 
@@ -193,7 +199,6 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
             AlcheFlameRecipe recipe = alcheRecipeOptional.get().value();
             ItemStack result = recipe.getResultItem(level.registryAccess());
 
-            // Legg resultatet til i output-spor
             ItemStack outputStack = outputItems.getStackInSlot(0);
             if (outputStack.isEmpty()) {
                 outputItems.setStackInSlot(0, result.copy());
@@ -219,25 +224,28 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
         }
     }
 
+    private boolean isFuel(ItemStack stack) {
+        return stack.getBurnTime(null) > 0;
+    }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putInt("my_block_entity.my_int", myInt);
-        tag.putInt("my_block_entity.progress", this.progress);
-        tag.putInt("my_block_entity.max_progress", this.maxProgress);
-        tag.put("my_block_entity.inputs", inputItems.serializeNBT(registries));
-        tag.put("my_block_entity.outputs", outputItems.serializeNBT(registries));
+        tag.putInt("progress", this.progress);
+        tag.putInt("maxProgress", this.maxProgress);
+        tag.putInt("fuelBurnTime", this.fuelBurnTime);
+        tag.put("inputItems", inputItems.serializeNBT(registries));
+        tag.put("outputItems", outputItems.serializeNBT(registries));
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        myInt = tag.getInt("my_block_entity.my_int");
-        progress = tag.getInt("my_block_entity.progress");
-        maxProgress = tag.getInt("my_block_entity.max_progress");
-        inputItems.deserializeNBT(registries, tag.getCompound("my_block_entity.inputs"));
-        outputItems.deserializeNBT(registries, tag.getCompound("my_block_entity.outputs"));
+        this.progress = tag.getInt("progress");
+        this.maxProgress = tag.getInt("maxProgress");
+        this.fuelBurnTime = tag.getInt("fuelBurnTime");
+        inputItems.deserializeNBT(registries, tag.getCompound("inputItems"));
+        outputItems.deserializeNBT(registries, tag.getCompound("outputItems"));
     }
 
     private ItemStackHandler createItemHandler(int slots) {
@@ -286,10 +294,6 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
         return outputItemHandler;
     }
 
-    public int getMyInt() {
-        return myInt;
-    }
-
     public int getProgress() {
         return progress;
     }
@@ -298,14 +302,26 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
         return maxProgress;
     }
 
+    public int getMaxFuelBurnTime() {
+        return maxFuelBurnTime;
+    }
+
     @Nullable
     @Override
-    public @javax.annotation.Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new AlcheFlameMenu(containerId, player, this.getBlockPos());
     }
 
     @Override
     public Component getDisplayName() {
         return Component.translatable("block.aurora.alche_flame");
+    }
+
+    public void dropItems() {
+        SimpleContainer inventory = new SimpleContainer(itemHandler.get().getSlots());
+        for (int i = 0; i < itemHandler.get().getSlots(); i++) {
+            inventory.setItem(i, itemHandler.get().getStackInSlot(i));
+        }
+        Containers.dropContents(level, worldPosition, inventory);
     }
 }

@@ -65,7 +65,7 @@ public class AlcheFlame extends Block implements EntityBlock {
 
         return (lvl, pos, st, blockEntity) -> {
             if (blockEntity instanceof AlcheFlameBlockEntity tile) {
-                tile.tick();
+                tile.tick(level, pos, state, tile);
             }
         };
     }

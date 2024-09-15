@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aurora:block/beam",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aurora:block/beam"
+    },
+    "facing=south": {
+      "model": "aurora:block/beam",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aurora:block/beam",
+      "y": 270
+    }
+  }
+}

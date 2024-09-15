@@ -1,0 +1,15 @@
+{
+  "type": "aurora:alche_flame",
+
+  "ingredient": {
+    "item": "minecraft:clay_ball"
+  },
+
+  "furnace_ingredient": {
+    "item": "minecraft:clay"
+  },
+
+  "output": {
+    "item": "aurora:hard_clay_ball"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "aurora:alche_flame",
+  "ingredient": {
+    "item": "aurora:clay_jar"
+  },
+
+  "furnace_ingredient": {
+  "item": "aurora:twig"
+  },
+
+  "output": {
+    "item": "aurora:twig_clay_jar"
+  }
+}

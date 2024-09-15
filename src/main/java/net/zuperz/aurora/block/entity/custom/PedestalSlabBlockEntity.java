@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.zuperz.aurora.Recipes.AuroraPillerPedestalSlabRecipe;
 import net.zuperz.aurora.Recipes.ModRecipes;
+import net.zuperz.aurora.Recipes.PedestalSlabClayRecipe;
 import net.zuperz.aurora.Recipes.PedestalSlabRecipe;
 import net.zuperz.aurora.block.custom.SlabBlock;
 import net.zuperz.aurora.block.entity.ItemHandler.ContainerRecipeInput;
@@ -74,13 +75,20 @@ public class PedestalSlabBlockEntity extends BlockEntity implements Container {
 
         boolean hasAuroraPiller = SlabBlock.arePedestalPositionsAuroraWireOrPiller(level, pos);
 
+        boolean hasAuroraWire = SlabBlock.arePedestalPositionsAuroraWire(level, pos);
+
+        boolean hasClayWire = SlabBlock.arePedestalPositionsClayWire(level, pos);
+
         SimpleContainer container = new SimpleContainer(1);
         container.setItem(0, inputStack);
 
         RecipeInput recipeInput = new ContainerRecipeInput(container);
 
         Optional<RecipeHolder<AuroraPillerPedestalSlabRecipe>> auroraPillerRecipeOptional = Optional.empty();
+
         Optional<RecipeHolder<PedestalSlabRecipe>> pedestalSlabRecipeOptional = Optional.empty();
+
+        Optional<RecipeHolder<PedestalSlabClayRecipe>> pedestalSlabClayRecipeOptional = Optional.empty();
 
         if (hasAuroraPiller) {
             auroraPillerRecipeOptional = level.getRecipeManager()
@@ -89,16 +97,25 @@ public class PedestalSlabBlockEntity extends BlockEntity implements Container {
             pedestalSlabRecipeOptional = level.getRecipeManager()
                     .getRecipeFor(ModRecipes.PEDESTAL_SLAB_RECIPE_TYPE.get(), recipeInput, level);
 
-        } else {
+        }
+        if (hasAuroraWire) {
             pedestalSlabRecipeOptional = level.getRecipeManager()
                     .getRecipeFor(ModRecipes.PEDESTAL_SLAB_RECIPE_TYPE.get(), recipeInput, level);
+        }
+        if (hasClayWire) {
+            pedestalSlabClayRecipeOptional = level.getRecipeManager()
+                    .getRecipeFor(ModRecipes.PEDESTAL_SLAB_CLAY_RECIPE_TYPE.get(), recipeInput, level);
         }
 
         Recipe<?> recipe = null;
         if (auroraPillerRecipeOptional.isPresent()) {
             recipe = auroraPillerRecipeOptional.get().value();
+
         } else if (pedestalSlabRecipeOptional.isPresent()) {
             recipe = pedestalSlabRecipeOptional.get().value();
+
+        } else if (pedestalSlabClayRecipeOptional.isPresent()) {
+            recipe = pedestalSlabClayRecipeOptional.get().value();
         }
 
         if (recipe != null) {

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.15,
+  "ingredient": {
+    "item": "aurora:soft_clay_jar"
+  },
+  "result": {
+    "count": 1,
+    "id": "aurora:clay_jar"
+  }
+}

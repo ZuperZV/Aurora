@@ -147,7 +147,7 @@ public class SlabBlock extends BaseEntityBlock {
                 });
     }
 
-    private static BlockPos[] getPedestalPositions(BlockPos Pos) {
+    private static BlockPos[] getWirePositions(BlockPos Pos) {
         return new BlockPos[]{
                 Pos.offset(2, 0, 0),
                 Pos.offset(-2, 0, 0),
@@ -178,9 +178,9 @@ public class SlabBlock extends BaseEntityBlock {
     }
 
     public static boolean arePedestalPositionsAuroraWire(Level pLevel, BlockPos Pos) {
-        BlockPos[] pedestalPositions = getPedestalPositions(Pos);
+        BlockPos[] wirePositions = getWirePositions(Pos);
 
-        for (BlockPos pos : pedestalPositions) {
+        for (BlockPos pos : wirePositions) {
             if (!pLevel.getBlockState(pos).is(ModBlocks.AURORA_WIRE)) {
                 return false;
             }
@@ -188,15 +188,31 @@ public class SlabBlock extends BaseEntityBlock {
         return true;
     }
 
-    public static boolean arePedestalPositionsAuroraWireOrPiller(Level pLevel, BlockPos pos) {
-        BlockPos[] pedestalPositions = getPedestalPositions(pos);
+    public static boolean arePedestalPositionsClayWire(Level pLevel, BlockPos Pos) {
+        BlockPos[] wirePositions = getWirePositions(Pos);
 
-        for (BlockPos pedestalPos : pedestalPositions) {
-            BlockState blockState = pLevel.getBlockState(pedestalPos);
-            if (blockState.is(ModBlocks.AURORA_PILLER)) {
-                return true;
+        for (BlockPos pos : wirePositions) {
+            if (!pLevel.getBlockState(pos).is(ModBlocks.CLAY_WIRE)) {
+                return false;
             }
         }
-        return false;
+        return true;
+    }
+
+    public static boolean arePedestalPositionsAuroraWireOrPiller(Level pLevel, BlockPos pos) {
+        BlockPos[] wirePositions = getWirePositions(pos);
+        boolean hasAuroraPiller = false;
+
+        for (BlockPos pedestalPos : wirePositions) {
+            BlockState blockState = pLevel.getBlockState(pedestalPos);
+
+            if (blockState.is(ModBlocks.AURORA_PILLER)) {
+                hasAuroraPiller = true;
+            } else if (!blockState.is(ModBlocks.AURORA_WIRE.get())) {
+                return false;
+            }
+        }
+
+        return hasAuroraPiller;
     }
 }

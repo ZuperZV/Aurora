@@ -1,0 +1,12 @@
+{
+  "type": "aurora:pedestal_slab_clay_ring",
+  "ingredient": {
+    "item": "aurora:pedestal_slab"
+  },
+  "wire": {
+    "item": "aurora:clay_dust"
+  },
+  "output": {
+    "item": "aurora:pedestal_slab"
+  }
+}

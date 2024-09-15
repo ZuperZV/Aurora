@@ -44,9 +44,6 @@ public class MyBlockScreen extends AbstractContainerScreen<MyMenu> {
         guiGraphics.blit(TEXTURE, x + 73, y + 35, 176, 0, progressArrowWidth, 15);
     }
 
-
-
-
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBg(guiGraphics, partialTick, mouseX, mouseY);

@@ -6,7 +6,22 @@
   "item.aurora.aurora_skull": "Aurora Skull",
   "item.aurora.fate_blade": "Fate Blade",
   "item.aurora.star_dust": "Star Dust",
+  "item.aurora.aurora_dust": "Aurora Dust",
+  "item.aurora.clay_dust": "Clay Dust",
+  "item.aurora.hard_clay_ball": "Hard Clay Ball",
+  "item.aurora.twig": "Twig",
+  "item.aurora.skull_twig": "Skull Twig",
+  "block.aurora.stone_skull_stone": "Skull Stone",
 
   "block.aurora.my_block": "My Block",
-  "block.aurora.alche_flame": "Alche Oven"
+  "block.aurora.alche_flame": "Alche Oven",
+  "block.aurora.pedestal_slab": "Pedestal Slab",
+  "block.aurora.aurora_piller": "Aurora Beam",
+  "block.aurora.beam": "Beam",
+
+  "item.aurora.soft_clay_jar": "Soft Clay Jar",
+  "item.aurora.clay_jar": "Clay Jar",
+  "item.aurora.sapling_clay_jar": "Sapling Clay Jar",
+  "item.aurora.fire_clay_jar": "Fire Clay Jar",
+  "item.aurora.twig_clay_jar": "Twig Clay Jar"
 }

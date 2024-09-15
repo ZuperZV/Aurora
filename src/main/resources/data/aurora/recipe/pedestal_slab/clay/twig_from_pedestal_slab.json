@@ -1,0 +1,9 @@
+{
+  "type": "aurora:pedestal_slab_clay",
+  "ingredient": {
+    "item": "minecraft:stick"
+  },
+  "output": {
+    "item": "aurora:twig"
+  }
+}

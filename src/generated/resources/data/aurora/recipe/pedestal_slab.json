@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aurora:fire_clay_jar"
+    },
+    "B": {
+      "item": "minecraft:deepslate"
+    },
+    "C": {
+      "item": "minecraft:deepslate_bricks"
+    },
+    "D": {
+      "item": "minecraft:polished_deepslate"
+    }
+  },
+  "pattern": [
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "aurora:pedestal_slab"
+  }
+}
