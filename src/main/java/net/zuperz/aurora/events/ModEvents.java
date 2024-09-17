@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.item.ModItems;
 import net.zuperz.aurora.item.custom.SaplingClayJarItem;
 import net.zuperz.aurora.item.custom.StoneSkullTwig;
@@ -26,7 +27,6 @@ public class ModEvents {
         Level world = event.getEntity().getCommandSenderWorld();
         BlockPos pos = event.getPos();
 
-        // Check if block is fire and player holds a SaplingClayJarItem
         if (world.getBlockState(pos).getBlock() == Blocks.FIRE) {
             ItemStack itemStack = event.getItemStack();
             if (itemStack.getItem() instanceof SaplingClayJarItem) {
@@ -43,10 +43,29 @@ public class ModEvents {
                     player.drop(newItem, false);
                 }
 
-                // Set block to air
                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
-                // Mark event as successful
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        } else if (world.getBlockState(pos).getBlock() == Blocks.LODESTONE) {
+            ItemStack itemStack = event.getItemStack();
+            if (itemStack.getItem() instanceof StoneSkullTwig) {
+
+                itemStack.shrink(1);
+
+                world.setBlockAndUpdate(pos, ModBlocks.ALTER.get().defaultBlockState());
+
+                event.setCancellationResult(InteractionResult.SUCCESS);
+                event.setCanceled(true);
+            }
+        } else if (world.getBlockState(pos).getBlock() == Blocks.STONE_BRICKS) {
+            ItemStack itemStack = event.getItemStack();
+            if (itemStack.getItem() instanceof StoneSkullTwig && world.getBlockState(pos.offset(0, -1, 0)).getBlock() == Blocks.STONE_BRICKS) {
+
+                world.setBlockAndUpdate(pos.offset(0, -1, 0), ModBlocks.BEAM.get().defaultBlockState());
+                world.setBlockAndUpdate(pos, ModBlocks.UPPER_BEAM.get().defaultBlockState());
+
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
             }

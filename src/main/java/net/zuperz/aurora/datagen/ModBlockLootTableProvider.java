@@ -39,9 +39,12 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MY_BLOCK.get());
 
         dropSelf(ModBlocks.ALCHE_FLAME.get());
+        dropSelf(ModBlocks.ALTER.get());
 
         dropSelf(ModBlocks.AURORA_PILLER.get());
         dropSelf(ModBlocks.BEAM.get());
+
+        dropSelf(ModBlocks.ARCANE_POWER_TABLE.get());
 
         this.add(ModBlocks.AURORA_WIRE.get(),
                 block -> LootTable.lootTable()

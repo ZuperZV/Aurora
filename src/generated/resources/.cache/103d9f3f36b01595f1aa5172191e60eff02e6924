@@ -1,0 +1,4 @@
+// 1.21	2024-09-15T21:29:14.6362279	Registries
+e9725accd35a6398789f11ed2569c6984aaabf0a data/aurora/neoforge/biome_modifier/add_stone_skull.json
+1dff5bec2003d8298b936ecab024229a81011b69 data/aurora/worldgen/configured_feature/stone_skull_ore.json
+604ea4328f72a1eb986871a00c26ccae1d7fb2b6 data/aurora/worldgen/placed_feature/stone_skull_placed.json

@@ -26,6 +26,9 @@ public class ModMenuTypes {
     public static final Supplier<MenuType<AlcheFlameMenu>> ALCHE_FLAME_MENU = MENUS.register("alche_flame_menu",
             () -> IMenuTypeExtension.create((windowId, inv, data) -> new AlcheFlameMenu(windowId, inv.player, data.readBlockPos())));
 
+    public static final Supplier<MenuType<AlterMenu>> ALTER_MENU = MENUS.register("alter_menu",
+            () -> IMenuTypeExtension.create((windowId, inv, data) -> new AlterMenu(windowId, inv.player, data.readBlockPos())));
+
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenuType(IContainerFactory<T> factory,
                                                                                             String name) {
         return MENUS.register(name, () -> IMenuTypeExtension.create(factory));

@@ -29,7 +29,7 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<AlterBlockEntity>> ALTER_BE =
             BLOCK_ENTITIES.register("alter_be", () -> BlockEntityType.Builder.of(
-                    AlterBlockEntity::new, ModBlocks.ALTER_SLAB.get()).build(null));
+                    AlterBlockEntity::new, ModBlocks.ALTER.get()).build(null));
 
     public static final Supplier<BlockEntityType<MyBlockTile>> MY_TILE =
             BLOCK_ENTITIES.register("my_tile", () -> BlockEntityType.Builder.of(
@@ -38,6 +38,10 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<AlcheFlameBlockEntity>> ALCHE_FLAME_BLOCK_ENTITY =
             BLOCK_ENTITIES.register("alche_flame_block_entity", () -> BlockEntityType.Builder.of(
                     AlcheFlameBlockEntity::new, ModBlocks.ALCHE_FLAME.get()).build(null));
+
+    public static final Supplier<BlockEntityType<ArcanePowerTableBlockEntity>> ARCANE_POWER_TABLE_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("arcane_power_table_block_entity", () -> BlockEntityType.Builder.of(
+                    ArcanePowerTableBlockEntity::new, ModBlocks.ARCANE_POWER_TABLE.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

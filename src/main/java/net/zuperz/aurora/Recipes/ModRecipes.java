@@ -50,6 +50,9 @@ public class ModRecipes {
     public static final Supplier<RecipeType<AlterRecipe>> ALTER_RECIPE_TYPE =
             RECIPE_TYPES.register("alter", () -> AlterRecipe.Type.INSTANCE);
 
+    public static final Supplier<RecipeType<AuroraAlterRecipe>> AURORA_ALTER_RECIPE_TYPE =
+            RECIPE_TYPES.register("aurora_alter", () -> AuroraAlterRecipe.Type.INSTANCE);
+
 
 
     public static final Supplier<RecipeSerializer<MyBlockRecipe>> MY_BLOCK_SERIALIZER =
@@ -81,4 +84,7 @@ public class ModRecipes {
 
     public static final Supplier<RecipeSerializer<AlterRecipe>> ALTER_SERIALIZER =
             SERIALIZERS.register("alter", () -> AlterRecipe.Serializer.INSTANCE);
+
+    public static final Supplier<RecipeSerializer<AuroraAlterRecipe>> AURORA_ALTER_SERIALIZER =
+            SERIALIZERS.register("aurora_alter", () -> AuroraAlterRecipe.Serializer.INSTANCE);
 }

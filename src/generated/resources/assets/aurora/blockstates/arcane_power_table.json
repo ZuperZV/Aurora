@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aurora:block/arcane_power_table",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aurora:block/arcane_power_table"
+    },
+    "facing=south": {
+      "model": "aurora:block/arcane_power_table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aurora:block/arcane_power_table",
+      "y": 270
+    }
+  }
+}

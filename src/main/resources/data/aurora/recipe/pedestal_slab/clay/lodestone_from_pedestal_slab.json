@@ -1,0 +1,9 @@
+{
+  "type": "aurora:pedestal_slab_clay",
+  "ingredient": {
+    "item": "minecraft:cracked_stone_bricks"
+  },
+  "output": {
+    "item": "minecraft:lodestone"
+  }
+}

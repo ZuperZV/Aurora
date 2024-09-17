@@ -29,7 +29,7 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
     @Override
     public void render(AlterBlockEntity blockEntity, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        Lazy<IItemHandler> itemHandler = blockEntity.getItems();
+        Lazy<IItemHandler> itemHandler = blockEntity.getItemHandler();
         Level level = blockEntity.getLevel();
         BlockPos pos = blockEntity.getBlockPos();
 
@@ -38,14 +38,12 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
             poseStack.translate(0.5, 0.8, 0.5);
             poseStack.scale(0.5f, 0.5f, 0.5f);
 
-            // Render input slots (0 to 4)
             for (int i = 0; i < 5; i++) {
                 ItemStack stack = itemHandler.get().getStackInSlot(i);
 
                 if (!stack.isEmpty()) {
                     poseStack.pushPose();
 
-                    // Adjust positions based on the input slot
                     switch (i) {
                         case 0:
                             poseStack.translate(4.0, 3.0, 4.0);
@@ -60,7 +58,7 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
                             poseStack.translate(-4.0, 3.0, 4.0);
                             break;
                         case 4:
-                            poseStack.translate(0.0, 1.5, 0.0);
+                            poseStack.translate(0.0, 1.4, 0.0);
                             break;
                     }
 
@@ -72,11 +70,10 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
                 }
             }
 
-            // Render output slot (index 0 of outputItems)
             ItemStack outputStack = blockEntity.getOutputItems().getStackInSlot(0);
             if (!outputStack.isEmpty()) {
                 poseStack.pushPose();
-                poseStack.translate(0.0, 2.0, 0.0); // Position for output slot
+                poseStack.translate(0.0, 0.25, 0.0);
 
                 poseStack.mulPose(Axis.YP.rotationDegrees(blockEntity.getRenderingRotation()));
 
@@ -99,7 +96,6 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
     }
 
     private BlockPos[] getBeamPositions(BlockPos pos) {
-        // Adjust the beam positions if the arrangement changes
         return new BlockPos[]{
                 pos.offset(2, 0, -2),
                 pos.offset(-2, 0, -2),
@@ -109,8 +105,6 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
     }
 
     private int getLightLevel(Level level, BlockPos pos) {
-        int blockLight = level.getBrightness(LightLayer.BLOCK, pos);
-        int skyLight = level.getBrightness(LightLayer.SKY, pos);
-        return LightTexture.pack(blockLight, skyLight);
+        return LightTexture.FULL_BRIGHT;
     }
 }

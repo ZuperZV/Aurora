@@ -56,6 +56,12 @@ public class JEIPlugin implements IModPlugin {
     public static mezz.jei.api.recipe.RecipeType<AlcheFlameRecipe> ALCHE_OVEN_TYPE =
             new mezz.jei.api.recipe.RecipeType<>(AlcheOvenRecipeCategory.UID, AlcheFlameRecipe.class);
 
+    public static mezz.jei.api.recipe.RecipeType<AlterRecipe> ALTER_TYPE =
+            new mezz.jei.api.recipe.RecipeType<>(AlterRecipeCategory.UID, AlterRecipe.class);
+
+    public static mezz.jei.api.recipe.RecipeType<AuroraAlterRecipe> AURORA_ALTER_TYPE =
+            new mezz.jei.api.recipe.RecipeType<>(AuroraAlterRecipeCategory.UID, AuroraAlterRecipe.class);
+
 
 
     @Override
@@ -82,6 +88,9 @@ public class JEIPlugin implements IModPlugin {
 
         registration.addRecipeCategories(new InWoldBlockRecipeCategory(jeiHelpers.getGuiHelper()));
 
+        registration.addRecipeCategories(new AlterRecipeCategory(jeiHelpers.getGuiHelper()));
+
+        registration.addRecipeCategories(new AuroraAlterRecipeCategory(jeiHelpers.getGuiHelper()));
     }
 
 
@@ -126,6 +135,13 @@ public class JEIPlugin implements IModPlugin {
             registration.addRecipes(AlcheOvenRecipeCategory.RECIPE_TYPE,
                     getRecipe(alche, ModRecipes.ALCHE_FLAME_RECIPE_TYPE.get()));
 
+            var alter = world.getRecipeManager();
+            registration.addRecipes(AlterRecipeCategory.RECIPE_TYPE,
+                    getRecipe(alter, ModRecipes.ALTER_RECIPE_TYPE.get()));
+
+            var aurora_alter = world.getRecipeManager();
+            registration.addRecipes(AuroraAlterRecipeCategory.RECIPE_TYPE,
+                    getRecipe(aurora_alter, ModRecipes.AURORA_ALTER_RECIPE_TYPE.get()));
         }
 
     }
@@ -187,6 +203,20 @@ public class JEIPlugin implements IModPlugin {
 
         var alche = new ItemStack(ModBlocks.ALCHE_FLAME.get());
         registration.addRecipeCatalyst(alche, AlcheOvenRecipeCategory.RECIPE_TYPE, RecipeTypes.FUELING);
+
+        var alter = new ItemStack(ModBlocks.ALTER.get());
+        var alter2 = new ItemStack(ModBlocks.BEAM.get());
+        var alter3 = new ItemStack(ModItems.CLAY_DUST.get());
+        registration.addRecipeCatalyst(alter, AlterRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(alter2, AlterRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(alter3, AlterRecipeCategory.RECIPE_TYPE);
+
+        var aurora_alter = new ItemStack(ModBlocks.ALTER.get());
+        var aurora_alter2 = new ItemStack(ModBlocks.BEAM.get());
+        var aurora_alter3 = new ItemStack(ModItems.AURORA_DUST.get());
+        registration.addRecipeCatalyst(aurora_alter, AuroraAlterRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(aurora_alter2, AuroraAlterRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(aurora_alter3, AuroraAlterRecipeCategory.RECIPE_TYPE);
 
     }
 

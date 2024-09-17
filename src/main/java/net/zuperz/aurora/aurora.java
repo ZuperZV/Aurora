@@ -16,6 +16,7 @@ import net.zuperz.aurora.item.ModCreativeModeTabs;
 import net.zuperz.aurora.item.ModItems;
 import net.zuperz.aurora.item.custom.decorator.NumberBarDecorator;
 import net.zuperz.aurora.screen.AlcheFlameScreen;
+import net.zuperz.aurora.screen.AlterScreen;
 import net.zuperz.aurora.screen.ModMenuTypes;
 import net.zuperz.aurora.screen.MyBlockScreen;
 import org.slf4j.Logger;
@@ -93,8 +94,8 @@ public class aurora {
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(ModMenuTypes.MY_MENU.get(), MyBlockScreen::new);
-
             event.register(ModMenuTypes.ALCHE_FLAME_MENU.get(), AlcheFlameScreen::new);
+            event.register(ModMenuTypes.ALTER_MENU.get(), AlterScreen::new);
         }
 
         @SubscribeEvent

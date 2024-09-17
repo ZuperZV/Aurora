@@ -28,23 +28,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
+import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Alter extends BaseEntityBlock {
+public class Alter extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
-    public static final MapCodec<Alter> CODEC = simpleCodec(Alter::new);
-    public static final List<BlockPos> WIRE_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2)
-            .filter(p -> Math.abs(p.getX()) == 2 || Math.abs(p.getZ()) == 2)
-            .map(BlockPos::immutable)
-            .toList();
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
-
-    public Alter(Properties pProperties) {
-        super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
+    public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
+    public Alter(Properties properties) {
+        super(Properties.of());
     }
 
     @Override
@@ -57,7 +50,7 @@ public class Alter extends BaseEntityBlock {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
 
-    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
@@ -65,12 +58,7 @@ public class Alter extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, LIT);
-    }
-
-    @Override
-    public MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
+        pBuilder.add(FACING);
     }
 
     @Override
@@ -83,59 +71,60 @@ public class Alter extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
-    @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new AlterBlockEntity(pPos, pState);
+    public @javax.annotation.Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AlterBlockEntity(pos, state);
     }
 
     @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos,
-                            BlockState pNewState, boolean pMovedByPiston) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            if (pLevel.getBlockEntity(pPos) instanceof AlterBlockEntity alterBE) {
-                Containers.dropContents(pLevel, pPos, (Container) alterBE);
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
+    public @javax.annotation.Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        if (level.isClientSide) return null;
+
+        return (lvl, pos, st, blockEntity) -> {
+            if (blockEntity instanceof AlterBlockEntity tile) {
+                tile.tick();
             }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        };
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof AlterBlockEntity alterBE) {
-            ItemStack singleStack = pStack.copy();
-            singleStack.setCount(1);
+            if (Alter.arePedestalPositionsClayWire(pLevel, pPos) || Alter.arePedestalPositionsAuroraWire(pLevel, pPos)) {
 
-            if (!pStack.isEmpty()) {
-                // Try to insert into input slots first
-                for (int i = 0; i < 5; i++) {
-                    if (alterBE.isInputEmpty(i)) {
-                        alterBE.setItem(i, singleStack);
-                        pStack.shrink(1);
-                        pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
-                        return ItemInteractionResult.SUCCESS;
+                ItemStack singleStack = pStack.copy();
+                singleStack.setCount(1);
+
+                if (!pStack.isEmpty()) {
+                    // Try to insert into input slots first
+                    for (int i = 0; i < 5; i++) {
+                        if (alterBE.isInputEmpty(i)) {
+                            alterBE.setItem(i, singleStack);
+                            pStack.shrink(1);
+                            pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
+                            return ItemInteractionResult.SUCCESS;
+                        }
                     }
-                }
-            } else {
-                // Try to extract from output slot
-                if (!alterBE.isOutputEmpty(0)) {
-                    ItemStack stackOnPedestal = alterBE.getItem(5);
-                    pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
-                    alterBE.clearOutput(0);
-                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
-                    return ItemInteractionResult.SUCCESS;
-                }
-
-                // If output slot is empty, try to extract from input slots
-                for (int i = 0; i < 5; i++) {
-                    if (!alterBE.isInputEmpty(i)) {
-                        ItemStack stackOnPedestal = alterBE.getItem(i);
+                } else {
+                    // Try to extract from output slot
+                    if (!alterBE.isOutputEmpty(0)) {
+                        ItemStack stackOnPedestal = alterBE.getItem(5);
                         pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
-                        alterBE.clearInput(i);
+                        alterBE.clearOutput(0);
                         pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
                         return ItemInteractionResult.SUCCESS;
+                    }
+
+                    // If output slot is empty, try to extract from input slots
+                    for (int i = 0; i < 5; i++) {
+                        if (!alterBE.isInputEmpty(i)) {
+                            ItemStack stackOnPedestal = alterBE.getItem(i);
+                            pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
+                            alterBE.clearInput(i);
+                            pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+                            return ItemInteractionResult.SUCCESS;
+                        }
                     }
                 }
             }
@@ -143,18 +132,14 @@ public class Alter extends BaseEntityBlock {
         return ItemInteractionResult.SUCCESS;
     }
 
-    @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (pLevel.isClientSide) {
-            return null;
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (state.getBlock() != newState.getBlock()) {
+            if (level.getBlockEntity(pos) instanceof AlterBlockEntity furnace) {
+                furnace.dropItems();
+            }
         }
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.ALTER_BE.get(),
-                (pLevel1, pPos, pState1, pBlockEntity) -> {
-                    if (pBlockEntity instanceof AlterBlockEntity alterBE) {
-                        AlterBlockEntity.tick(pLevel1, pPos, alterBE);
-                    }
-                });
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     private static BlockPos[] getWirePositions(BlockPos pos) {

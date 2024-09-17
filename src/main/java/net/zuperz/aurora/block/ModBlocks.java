@@ -34,10 +34,10 @@ public class ModBlocks {
             () -> new GoldenCauldronBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().noOcclusion()));
 
     public static final DeferredBlock<Block> PEDESTAL_SLAB = registerBlock("pedestal_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().noOcclusion()));
+            () -> new SlabBlock(BlockBehaviour.Properties.of().noOcclusion()));
 
-    public static final DeferredBlock<Block> ALTER_SLAB = registerBlock("alter_slab",
-            () -> new Alter(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredBlock<Block> ALTER = registerBlock("alter",
+            () -> new Alter(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)));
 
     public static final DeferredBlock<Block> AURORA_WIRE = registerBlock("aurora_wire",
             () ->  new AuroraWireBlock(BlockBehaviour.Properties.of().noCollission().noOcclusion().instabreak().pushReaction(PushReaction.DESTROY)));
@@ -49,24 +49,25 @@ public class ModBlocks {
             () ->  new BlueStoneBlock(BlockBehaviour.Properties.of()));
 
     public static final DeferredBlock<Block> AURORA_PILLER = registerBlock("aurora_piller",
-            () ->  new AuroraPillerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 5)));
+            () ->  new AuroraPillerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
     public static final DeferredBlock<Block> UPPER_AURORA_PILLER = registerBlock("upper_aurora_piller",
-            () ->  new UpperAuroraPiller(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 6)));
+            () ->  new UpperAuroraPiller(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
     public static final DeferredBlock<Block> BEAM = registerBlock("beam",
-            () ->  new BeamBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 5)));
+            () ->  new BeamBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(25.0F, 1200.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
     public static final DeferredBlock<Block> UPPER_BEAM = registerBlock("upper_beam",
-            () ->  new UpperBeamBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 6)));
+            () ->  new UpperBeamBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(25.0F, 1200.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
+    public static final DeferredBlock<Block> ARCANE_POWER_TABLE = registerBlock("arcane_power_table",
+            () ->  new ArcanePowerTable(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(25.0F, 1200.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
+
+    public static final DeferredBlock<Block> SIDE_ARCANE_POWER_TABLE = registerBlock("side_arcane_power_table",
+            () ->  new SideArcanePowerTable(BlockBehaviour.Properties.of()));
 
     public static final DeferredBlock<Block> STONE_SKULL_STONE = registerBlock("stone_skull_stone",
-            () ->  new TwigableBlock(
-                    Blocks.STONE,
-                    SoundEvents.BRUSH_SAND,
-                    SoundEvents.BRUSH_SAND_COMPLETED,
-                    BlockBehaviour.Properties.of().noLootTable()));
+            () ->  new TwigableBlock(Blocks.STONE, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, BlockBehaviour.Properties.of().noLootTable()));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);

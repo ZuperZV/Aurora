@@ -1,0 +1,21 @@
+{
+  "type": "aurora:aurora_alter",
+  "ingredient1": {
+    "item": "minecraft:cobblestone"
+  },
+  "ingredient2": {
+    "item": "minecraft:cobblestone"
+  },
+  "ingredient3": {
+    "item": "minecraft:cobblestone"
+  },
+  "ingredient4": {
+    "item": "minecraft:cobblestone"
+  },
+  "ingredient5": {
+    "item": "aurora:twig"
+  },
+  "output": {
+    "item": "minecraft:stone"
+  }
+}

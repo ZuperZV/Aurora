@@ -6,6 +6,9 @@
     "aurora:aurora_piller",
     "aurora:pedestal_slab",
     "aurora:golden_cauldron",
-    "aurora:alche_flame"
+    "aurora:alche_flame",
+    "aurora:alter",
+    "aurora:beam",
+    "aurora:upper_beam"
   ]
 }

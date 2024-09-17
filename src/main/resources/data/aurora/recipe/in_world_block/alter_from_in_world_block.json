@@ -1,0 +1,15 @@
+{
+  "type": "aurora:in_world_block",
+  "block_1": {
+    "item": "minecraft:barrier"
+  },
+  "block_2": {
+    "item": "aurora:skull_twig"
+  },
+  "block_3": {
+    "item": "minecraft:lodestone"
+  },
+  "output": {
+    "item": "aurora:alter"
+  }
+}

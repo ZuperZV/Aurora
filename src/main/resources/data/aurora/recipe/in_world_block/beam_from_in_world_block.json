@@ -1,0 +1,15 @@
+{
+  "type": "aurora:in_world_block",
+  "block_1": {
+    "item": "aurora:skull_twig"
+  },
+  "block_2": {
+    "item": "minecraft:stone_bricks"
+  },
+  "block_3": {
+    "item": "minecraft:stone_bricks"
+  },
+  "output": {
+    "item": "aurora:beam"
+  }
+}

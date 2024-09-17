@@ -25,7 +25,10 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.AURORA_PILLER.get())
                 .add(ModBlocks.PEDESTAL_SLAB.get())
                 .add(ModBlocks.GOLDEN_CAULDRON.get())
-                .add(ModBlocks.ALCHE_FLAME.get());
+                .add(ModBlocks.ALCHE_FLAME.get())
+                .add(ModBlocks.ALTER.get())
+                .add(ModBlocks.BEAM.get())
+                .add(ModBlocks.UPPER_BEAM.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.AURORA_PEDESTAL.get())
@@ -34,7 +37,10 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.AURORA_PILLER.get())
                 .add(ModBlocks.PEDESTAL_SLAB.get())
                 .add(ModBlocks.GOLDEN_CAULDRON.get())
-                .add(ModBlocks.ALCHE_FLAME.get());
+                .add(ModBlocks.ALCHE_FLAME.get())
+                .add(ModBlocks.ALTER.get())
+                .add(ModBlocks.BEAM.get())
+                .add(ModBlocks.UPPER_BEAM.get());
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
         ;
