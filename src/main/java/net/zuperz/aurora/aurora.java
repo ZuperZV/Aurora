@@ -7,10 +7,8 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.zuperz.aurora.Recipes.ModRecipes;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
-import net.zuperz.aurora.block.entity.renderer.AlterBlockEntityRenderer;
-import net.zuperz.aurora.block.entity.renderer.AuroraPedestalBlockEntityRenderer;
-import net.zuperz.aurora.block.entity.renderer.GoldenCauldronBlockEntityRenderer;
-import net.zuperz.aurora.block.entity.renderer.PedestalSlabBlockEntityRenderer;
+import net.zuperz.aurora.block.entity.renderer.*;
+import net.zuperz.aurora.component.ModDataComponentTypes;
 import net.zuperz.aurora.events.ModEvents;
 import net.zuperz.aurora.item.ModCreativeModeTabs;
 import net.zuperz.aurora.item.ModItems;
@@ -52,6 +50,8 @@ public class aurora {
         ModMenuTypes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
 
+        ModDataComponentTypes.register(modEventBus);
+
         ModRecipes.SERIALIZERS.register(modEventBus);
         ModRecipes.RECIPE_TYPES.register(modEventBus);
 
@@ -89,6 +89,7 @@ public class aurora {
             event.registerBlockEntityRenderer(ModBlockEntities.GOLDEN_CAULDRON_BE.get(), GoldenCauldronBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.SLAB_BE.get(), PedestalSlabBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.ALTER_BE.get(), AlterBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_POWER_TABLE_BLOCK_ENTITY.get(), ArcanePowerTableBlockEntityRenderer::new);
         }
 
         @SubscribeEvent
@@ -100,7 +101,8 @@ public class aurora {
 
         @SubscribeEvent
         public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
-            event.register(ModItems.SKULL_TWIG.get(), new NumberBarDecorator());
+            event.register(ModItems.AURORA_SKULL.get(), new NumberBarDecorator());
+            event.register(ModItems.STONE_SKULL.get(), new NumberBarDecorator());
         }
     }
 }

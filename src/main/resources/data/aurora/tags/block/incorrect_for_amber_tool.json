@@ -1,8 +1,0 @@
-{
-  "values": [
-    "#minecraft:incorrect_for_netherite_tool"
-  ],
-  "remove": [
-    "#neo_tech:needs_amber_tool"
-  ]
-}

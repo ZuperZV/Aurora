@@ -92,24 +92,64 @@ public class SideArcanePowerTable extends BarrierBlock {
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        if (pState.getBlock() != pNewState.getBlock()) {
 
-        int radius = 1;
+            // Check if the removed block is the main Arcane Power Table
+            if (pState.getBlock() == ModBlocks.SIDE_ARCANE_POWER_TABLE.get()) {
+                Direction facing = pState.getValue(FACING);
 
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    BlockPos targetPos = pPos.offset(x, y, z);
-                    BlockState targetState = pLevel.getBlockState(targetPos);
+                // Remove the left and right side blocks based on the facing direction
+                BlockPos leftPos = pPos.relative(facing.getCounterClockWise());
+                BlockState leftState = pLevel.getBlockState(leftPos);
+                if (leftState.getBlock() == ModBlocks.ARCANE_POWER_TABLE.get()) {
+                    pLevel.removeBlock(leftPos, false);
+                }
 
-                    if (targetState.is(ModBlocks.ARCANE_POWER_TABLE) || targetState.is(ModBlocks.SIDE_ARCANE_POWER_TABLE)) {
-                        pLevel.removeBlock(targetPos, false);
+                BlockPos rightPos = pPos.relative(facing.getClockWise());
+                BlockState rightState = pLevel.getBlockState(rightPos);
+                if (rightState.getBlock() == ModBlocks.ARCANE_POWER_TABLE.get()) {
+                    pLevel.removeBlock(rightPos, false);
+                }
+            }
+
+            // Remove blocks in a radius only if they are part of the same multiblock structure
+            int radius = 1;
+
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    for (int z = -radius; z <= radius; z++) {
+                        BlockPos targetPos = pPos.offset(x, y, z);
+                        BlockState targetState = pLevel.getBlockState(targetPos);
+
+                        // Only remove blocks that are part of the same multiblock structure
+                        if (isPartOfMultiBlock(targetState, pState, pLevel, targetPos)) {
+                            pLevel.removeBlock(targetPos, false);
+                        }
                     }
                 }
             }
         }
+
+        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+    // Custom method to check if a block is part of the same multiblock structure
+    private boolean isPartOfMultiBlock(BlockState targetState, BlockState originalState, Level level, BlockPos targetPos) {
+        // Check if the block is either the Arcane Power Table or the Side Arcane Power Table
+        if (targetState.getBlock() == ModBlocks.ARCANE_POWER_TABLE.get() ||
+                targetState.getBlock() == ModBlocks.SIDE_ARCANE_POWER_TABLE.get()) {
+
+            // Ensure it has the same orientation (facing) as the original block
+            Direction targetFacing = targetState.getValue(ArcanePowerTable.FACING);
+            Direction originalFacing = originalState.getValue(ArcanePowerTable.FACING);
+
+            // If the facing direction matches, it's part of the same multiblock structure
+            return targetFacing == originalFacing;
+        }
+
+        // Otherwise, it's not part of the structure
+        return false;
+    }
     public static VoxelShape rotateShape(Direction from, Direction to, VoxelShape shape) {
         VoxelShape[] buffer = new VoxelShape[]{shape, Shapes.empty()};
 

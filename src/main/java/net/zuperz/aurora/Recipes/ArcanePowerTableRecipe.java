@@ -18,16 +18,12 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
     public final Ingredient ingredient0;
     public final Ingredient ingredient1;
     public final Ingredient ingredient2;
-    public final Ingredient ingredient3;
-    public final Ingredient ingredient4;
 
-    public ArcanePowerTableRecipe(ItemStack output, Ingredient ingredient0, Ingredient ingredient1, Ingredient ingredient2, Ingredient ingredient3, Ingredient ingredient4) {
+    public ArcanePowerTableRecipe(ItemStack output, Ingredient ingredient0, Ingredient ingredient1, Ingredient ingredient2) {
         this.output = output;
         this.ingredient0 = ingredient0;
         this.ingredient1 = ingredient1;
         this.ingredient2 = ingredient2;
-        this.ingredient3 = ingredient3;
-        this.ingredient4 = ingredient4;
     }
 
     @Override
@@ -53,12 +49,8 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
         boolean ingredient0Matches = ingredient0.test(container.getItem(0));
         boolean ingredient1Matches = ingredient1.test(container.getItem(1));
         boolean ingredient2Matches = ingredient2.test(container.getItem(2));
-        boolean ingredient3Matches = ingredient3.test(container.getItem(3));
-        boolean ingredient4Matches = ingredient4.test(container.getItem(4));
 
-        // Return true only if all ingredients match
-        return ingredient0Matches && ingredient1Matches && ingredient2Matches
-                && ingredient3Matches && ingredient4Matches;
+        return ingredient0Matches && ingredient1Matches && ingredient2Matches;
     }
 
     @Override
@@ -72,8 +64,6 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
         ingredients.add(0, ingredient0);
         ingredients.add(1, ingredient1);
         ingredients.add(2, ingredient2);
-        ingredients.add(3, ingredient3);
-        ingredients.add(4, ingredient4);
         return ingredients;
     }
 
@@ -84,7 +74,7 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
 
     @Override
     public String getGroup() {
-        return "aurora_alter";
+        return "aurora_power_table";
     }
 
     @Override
@@ -100,23 +90,21 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
     public static final class Type implements RecipeType<ArcanePowerTableRecipe> {
         private Type() { }
         public static final Type INSTANCE = new Type();
-        public static final String ID = "aurora_aurora_alter";
+        public static final String ID = "aurora_power_table";
     }
 
     public static final class Serializer implements RecipeSerializer<ArcanePowerTableRecipe> {
         private Serializer() {}
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID =
-                ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "aurora_alter");
+                ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "aurora_power_table");
 
         private final MapCodec<ArcanePowerTableRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
             return instance.group(
                     CodecFix.ITEM_STACK_CODEC.fieldOf("output").forGetter((recipe) -> recipe.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter((recipe) -> recipe.ingredient0),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter((recipe) -> recipe.ingredient1),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient3").forGetter((recipe) -> recipe.ingredient2),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient4").forGetter((recipe) -> recipe.ingredient3),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient5").forGetter((recipe) -> recipe.ingredient4)
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient3").forGetter((recipe) -> recipe.ingredient2)
             ).apply(instance, ArcanePowerTableRecipe::new);
         });
 
@@ -137,19 +125,15 @@ public class ArcanePowerTableRecipe implements Recipe<RecipeInput> {
             Ingredient input0 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             Ingredient input1 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             Ingredient input2 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            Ingredient input3 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            Ingredient input4 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
             ItemStack output = ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer);
 
-            return new ArcanePowerTableRecipe(output, input0, input1, input2, input3, input4);
+            return new ArcanePowerTableRecipe(output, input0, input1, input2);
         }
 
         private static void write(RegistryFriendlyByteBuf buffer, ArcanePowerTableRecipe recipe) {
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient0);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient1);
             Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient2);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient3);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingredient4);
             ItemStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.output);
         }
     }

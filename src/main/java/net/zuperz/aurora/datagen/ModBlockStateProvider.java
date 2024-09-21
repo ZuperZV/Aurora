@@ -51,6 +51,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         horizontalBlock(ModBlocks.ARCANE_POWER_TABLE.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/arcane_power_table")));
 
+        horizontalBlock(ModBlocks.SIDE_ARCANE_POWER_TABLE.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/side_arcane_power_table")));
+
         blockWithItem(ModBlocks.BLUESTONE);
         blockWithItem(ModBlocks.STONE_SKULL_STONE);
     }

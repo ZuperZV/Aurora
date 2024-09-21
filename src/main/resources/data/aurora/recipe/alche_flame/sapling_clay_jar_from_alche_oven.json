@@ -1,11 +1,12 @@
 {
   "type": "aurora:alche_flame",
-  "ingredient": {
-    "item": "aurora:clay_jar"
-  },
 
   "furnace_ingredient": {
-  "item": "minecraft:oak_sapling"
+    "item": "minecraft:oak_sapling"
+  },
+
+  "ingredient": {
+    "item": "aurora:clay_jar"
   },
 
   "output": {

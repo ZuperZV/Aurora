@@ -21,27 +21,32 @@ public class ModCreativeModeTabs {
                     .icon(() -> new ItemStack(ModItems.SKRAP_AURORA.get()))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModBlocks.ALCHE_FLAME.get());
+                        pOutput.accept(ModBlocks.PEDESTAL_SLAB.get());
+                        pOutput.accept(ModBlocks.ARCANE_POWER_TABLE.get());
+                        pOutput.accept(ModBlocks.ALTER.get());
+                        pOutput.accept(ModBlocks.BEAM.get());
+                        pOutput.accept(ModBlocks.AURORA_PILLER.get());
+                        pOutput.accept(ModBlocks.BLUESTONE.get());
                         pOutput.accept(ModItems.SOFT_CLAY_JAR.get());
                         pOutput.accept(ModItems.CLAY_JAR.get());
                         pOutput.accept(ModItems.SAPLING_CLAY_JAR.get());
                         pOutput.accept(ModItems.FIRE_CLAY_JAR.get());
                         pOutput.accept(ModItems.TWIG_CLAY_JAR.get());
+                        pOutput.accept(ModItems.MAGIC_CLAY_JAR.get());
 
                         pOutput.accept(ModItems.HARD_CLAY_BALL.get());
                         pOutput.accept(ModItems.CLAY_DUST.get());
                         pOutput.accept(ModItems.AURORA_DUST.get());
                         pOutput.accept(ModItems.SKRAP_AURORA.get());
                         pOutput.accept(ModItems.AURORA_INGOT.get());
+                        pOutput.accept(ModItems.STONE_SKULL.get());
                         pOutput.accept(ModItems.AURORA_SKULL.get());
-                        pOutput.accept(ModItems.HARD_CLAY_BALL.get());
-
-                        pOutput.accept(ModBlocks.PEDESTAL_SLAB.get());
-                        pOutput.accept(ModBlocks.BLUESTONE.get());
-                        pOutput.accept(ModBlocks.AURORA_PILLER.get());
-
                         pOutput.accept(ModItems.TWIG.get());
                         pOutput.accept(ModItems.SKULL_TWIG.get());
+                        pOutput.accept(ModItems.MATERIALE_TWIG.get());
+                        pOutput.accept(ModItems.NETHERITE_MATERIALE_TWIG.get());
                         pOutput.accept(ModBlocks.STONE_SKULL_STONE.get());
+
                     }).build());
 
     public static void register(IEventBus eventBus) {

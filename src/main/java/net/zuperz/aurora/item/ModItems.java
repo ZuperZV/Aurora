@@ -7,10 +7,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
-import net.zuperz.aurora.item.custom.AuroraSkullItem;
-import net.zuperz.aurora.item.custom.SaplingClayJarItem;
-import net.zuperz.aurora.item.custom.StoneSkullTwig;
-import net.zuperz.aurora.item.custom.TwigItem;
+import net.zuperz.aurora.item.custom.*;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS =
@@ -23,7 +20,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> AURORA_SKULL = ITEMS.register("aurora_skull",
-            () -> new AuroraSkullItem(0, new Item.Properties()));
+            () -> new AuroraSkullItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> STONE_SKULL = ITEMS.register("stone_skull",
+            () -> new AuroraSkullItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> FATE_BLADE = ITEMS.register("fate_blade",
             () -> new Item(new Item.Properties()));
@@ -40,11 +40,17 @@ public class ModItems {
     public static final DeferredItem<Item> HARD_CLAY_BALL = ITEMS.register("hard_clay_ball",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> SKULL_TWIG = ITEMS.register("skull_twig",
+            () -> new StoneSkullTwig(new Item.Properties().stacksTo(1)));
+
     public static final DeferredItem<Item> TWIG = ITEMS.register("twig",
             () -> new TwigItem(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> SKULL_TWIG = ITEMS.register("skull_twig",
-            () -> new StoneSkullTwig(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> MATERIALE_TWIG = ITEMS.register("materiale_twig",
+            () -> new MaterialeTwigItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> NETHERITE_MATERIALE_TWIG = ITEMS.register("netherite_materiale_twig",
+            () -> new NetheriteTwigItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> BLUESTONE_DUST = ITEMS.register("bluestone_dust",
             () -> new Item(new Item.Properties()));
@@ -62,6 +68,9 @@ public class ModItems {
             () -> new SaplingClayJarItem(new Item.Properties().fireResistant()));
 
     public static final DeferredItem<Item> TWIG_CLAY_JAR = ITEMS.register("twig_clay_jar",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> MAGIC_CLAY_JAR = ITEMS.register("magic_clay_jar",
             () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

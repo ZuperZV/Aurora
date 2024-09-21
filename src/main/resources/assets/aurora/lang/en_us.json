@@ -4,6 +4,7 @@
   "item.aurora.skrap_aurora": "Skrap Aurora",
   "item.aurora.aurora_ingot": "Aurora Ingot",
   "item.aurora.aurora_skull": "Aurora Skull",
+  "item.aurora.stone_skull": "Stone Skull",
   "item.aurora.fate_blade": "Fate Blade",
   "item.aurora.star_dust": "Star Dust",
   "item.aurora.aurora_dust": "Aurora Dust",
@@ -11,6 +12,8 @@
   "item.aurora.hard_clay_ball": "Hard Clay Ball",
   "item.aurora.twig": "Twig",
   "item.aurora.skull_twig": "Skull Twig",
+  "item.aurora.materiale_twig": "Materiale Twig",
+  "item.aurora.netherite_materiale_twig": "Netherite Twig",
   "block.aurora.stone_skull_stone": "Skull Stone",
 
   "block.aurora.my_block": "My Block",
@@ -20,9 +23,13 @@
   "block.aurora.beam": "Beam",
   "block.aurora.alter": "Alter",
 
+  "block.aurora.arcane_power_table": "Arcane Power Table",
+  "block.aurora.side_arcane_power_table": "Side Arcane Power Table",
+
   "item.aurora.soft_clay_jar": "Soft Clay Jar",
   "item.aurora.clay_jar": "Clay Jar",
   "item.aurora.sapling_clay_jar": "Sapling Clay Jar",
   "item.aurora.fire_clay_jar": "Fire Clay Jar",
-  "item.aurora.twig_clay_jar": "Twig Clay Jar"
+  "item.aurora.twig_clay_jar": "Twig Clay Jar",
+  "item.aurora.magic_clay_jar": "Magic Clay Jar"
 }

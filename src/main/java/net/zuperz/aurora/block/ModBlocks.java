@@ -69,6 +69,8 @@ public class ModBlocks {
     public static final DeferredBlock<Block> STONE_SKULL_STONE = registerBlock("stone_skull_stone",
             () ->  new TwigableBlock(Blocks.STONE, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, BlockBehaviour.Properties.of().noLootTable()));
 
+    //arcane_pedestal
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,waterlogged=false": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 90
+    },
+    "facing=east,waterlogged=true": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
+      "model": "aurora:block/side_arcane_power_table"
+    },
+    "facing=north,waterlogged=true": {
+      "model": "aurora:block/side_arcane_power_table"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 180
+    },
+    "facing=south,waterlogged=true": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "aurora:block/side_arcane_power_table",
+      "y": 270
+    }
+  }
+}

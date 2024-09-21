@@ -44,6 +44,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_twig",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.TWIG).build()))
                 .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "charcoal_from_twig"));
 
+        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(Items.LAPIS_LAZULI)), RecipeCategory.MISC , Items.CYAN_DYE, 0.15f , 100)
+                .unlockedBy("has_lapis",inventoryTrigger(ItemPredicate.Builder.item().of(Items.LAPIS_LAZULI).build()))
+                .save(pWriter);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOFT_CLAY_JAR.get())
                 .pattern(" A ")
                 .pattern("AAA")

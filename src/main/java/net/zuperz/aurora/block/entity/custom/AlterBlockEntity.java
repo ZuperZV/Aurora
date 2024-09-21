@@ -54,7 +54,10 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
     private int myInt = 0;
     public final ContainerData data;
     private int progress = 0;
-    private int maxProgress = 200; // Adjust this value as needed
+    private int maxProgress = 300;
+
+    private static final int MAX_DISTANCE = 20;
+    private static final int ENERGY_CONSUMPTION_PER_TICK = 5;
 
     public AlterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALTER_BE.get(), pos, state);
@@ -84,30 +87,80 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick() {
-        Random r = new Random();
-        increaseCraftingProcess();
-        myInt = r.nextInt(0, 10);
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+        ArcanePowerTableBlockEntity arcanePowerTable = findNearestArcanePowerTable(this.getBlockPos());
 
-        if (hasRecipe()) {
-            increaseCraftingProcess();
+        if (isWithinRangeAndPowered()) {
+            increaseCraftingProcess(arcanePowerTable);
+            myInt = new Random().nextInt(0, 10);
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
 
-            if (hasProgressFinished()) {
-                craftItem();
+            if (hasRecipe()) {
+                increaseCraftingProcess(arcanePowerTable);
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+
+                if (hasProgressFinished()) {
+                    craftItem();
+                    resetProgress();
+                }
+            } else {
                 resetProgress();
             }
         } else {
             resetProgress();
+            notifyPlayerIfOutOfEnergy();
         }
+    }
+
+    private void notifyPlayerIfOutOfEnergy() {
+        if (level == null || level.isClientSide) return;  // Only run on the server side
+
+        Player nearestPlayer = level.getNearestPlayer(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), 2.0, false);
+
+        if (nearestPlayer == null) return;
+
+        ArcanePowerTableBlockEntity arcanePowerTable = findNearestArcanePowerTable(getBlockPos());
+
+        if (arcanePowerTable == null || arcanePowerTable.getEnergyStored() == 0) {
+            nearestPlayer.displayClientMessage(Component.literal("No Arcane Power Tablet that is close enough"), true);
+        }
+    }
+
+
+    private boolean isWithinRangeAndPowered() {
+        BlockPos currentPos = this.getBlockPos();
+        ArcanePowerTableBlockEntity nearestPowerTable = findNearestArcanePowerTable(currentPos);
+
+        if (nearestPowerTable != null) {
+            int energy = nearestPowerTable.getEnergyStored();
+            double distance = currentPos.distSqr(nearestPowerTable.getBlockPos());
+            return distance <= MAX_DISTANCE * MAX_DISTANCE && energy > 0;
+        }
+        return false;
+    }
+
+    @Nullable
+    private ArcanePowerTableBlockEntity findNearestArcanePowerTable(BlockPos currentPos) {
+        for (int dx = -MAX_DISTANCE; dx <= MAX_DISTANCE; dx++) {
+            for (int dy = -MAX_DISTANCE; dy <= MAX_DISTANCE; dy++) {
+                for (int dz = -MAX_DISTANCE; dz <= MAX_DISTANCE; dz++) {
+                    BlockPos nearbyPos = currentPos.offset(dx, dy, dz);
+                    BlockEntity blockEntity = level.getBlockEntity(nearbyPos);
+
+                    if (blockEntity instanceof ArcanePowerTableBlockEntity arcanePowerTable) {
+                        return arcanePowerTable;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private boolean hasProgressFinished() {
         return this.progress >= this.maxProgress;
     }
 
-    private void increaseCraftingProcess() {
-        this.progress++;
+    private void increaseCraftingProcess(ArcanePowerTableBlockEntity powerTable) {
+            this.progress++;
     }
 
     public void dropItems() {
@@ -163,9 +216,6 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
 
         return false;
     }
-
-
-
 
     private RecipeInput getRecipeInput(SimpleContainer inventory) {
         return new RecipeInput() {

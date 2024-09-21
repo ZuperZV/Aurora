@@ -1,21 +1,21 @@
 {
   "type": "aurora:alter",
   "ingredient1": {
-    "item": "minecraft:flint_and_steel"
+    "item": "minecraft:gold_ingot"
   },
   "ingredient2": {
-    "item": "minecraft:flint_and_steel"
+    "item": "minecraft:copper_ingot"
   },
   "ingredient3": {
-    "item": "minecraft:flint_and_steel"
+    "item": "minecraft:gold_ingot"
   },
   "ingredient4": {
-    "item": "minecraft:flint_and_steel"
+    "item": "minecraft:copper_ingot"
   },
   "ingredient5": {
     "item": "aurora:twig"
   },
   "output": {
-    "item": "aurora:beam"
+    "item": "aurora:materiale_twig"
   }
 }

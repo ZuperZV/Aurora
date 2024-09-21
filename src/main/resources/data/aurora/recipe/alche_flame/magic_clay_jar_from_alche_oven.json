@@ -2,14 +2,14 @@
   "type": "aurora:alche_flame",
 
   "furnace_ingredient": {
-    "item": "minecraft:clay"
+    "item": "minecraft:lapis_lazuli"
   },
 
   "ingredient": {
-    "item": "minecraft:clay_ball"
+    "item": "aurora:clay_jar"
   },
 
   "output": {
-    "item": "aurora:hard_clay_ball"
+    "item": "aurora:magic_clay_jar"
   }
 }

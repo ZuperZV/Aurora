@@ -3,6 +3,8 @@ package net.zuperz.aurora.block.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -26,6 +28,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.zuperz.aurora.block.ModBlocks;
+import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
 import net.zuperz.aurora.block.entity.custom.ArcanePowerTableBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -115,8 +118,8 @@ public class ArcanePowerTable extends Block implements EntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
-        if (pLevel == null || pState == null) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack itemStack) {
+        if (level == null || pState == null) {
             return;
         }
 
@@ -125,13 +128,13 @@ public class ArcanePowerTable extends Block implements EntityBlock {
         if (sideBlockState.hasProperty(FACING)) {
             Direction facing = pState.getValue(FACING);
 
-            BlockPos leftPos = pPos.relative(facing.getCounterClockWise());
+            BlockPos leftPos = pos.relative(facing.getCounterClockWise());
             BlockState leftBlockState = sideBlockState.setValue(FACING, facing.getOpposite());
-            pLevel.setBlock(leftPos, leftBlockState, 3);
+            level.setBlock(leftPos, leftBlockState, 3);
 
-            BlockPos rightPos = pPos.relative(facing.getClockWise());
+            BlockPos rightPos = pos.relative(facing.getClockWise());
             BlockState rightBlockState = sideBlockState.setValue(FACING, facing);
-            pLevel.setBlock(rightPos, rightBlockState, 3);
+            level.setBlock(rightPos, rightBlockState, 3);
 
         } else {
             System.err.println("FACING property is not available on SIDE_ARCANE_POWER_TABLE");
@@ -139,29 +142,60 @@ public class ArcanePowerTable extends Block implements EntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+    public void onRemove(BlockState pState, Level level, BlockPos pos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
 
-            pLevel.removeBlock(pPos.above(), false);
+            if (pState.getValue(ArcanePowerTable.FACING) == Direction.SOUTH) {
+                BlockPos westPos = pos.offset(-1, 0, 0);
+                BlockPos eastPos = pos.offset(1, 0, 0);
+                level.removeBlock(westPos, false);
+                level.removeBlock(eastPos, false);
+            }
 
-            if (pState.getBlock() == ModBlocks.ARCANE_POWER_TABLE.get()) {
-                Direction facing = pState.getValue(FACING);
+            if (pState.getValue(ArcanePowerTable.FACING) == Direction.NORTH) {
+                BlockPos westPos = pos.offset(-1, 0, 0);
+                BlockPos eastPos = pos.offset(1, 0, 0);
+                level.removeBlock(westPos, false);
+                level.removeBlock(eastPos, false);
+            }
 
-                BlockPos leftPos = pPos.relative(facing.getCounterClockWise());
-                BlockState leftState = pLevel.getBlockState(leftPos);
-                if (leftState.getBlock() == ModBlocks.SIDE_ARCANE_POWER_TABLE.get()) {
-                    pLevel.removeBlock(leftPos, false);
-                }
+            if (pState.getValue(ArcanePowerTable.FACING) == Direction.EAST) {
+                BlockPos westPos = pos.offset(0, 0, -1);
+                BlockPos eastPos = pos.offset(0, 0, 1);
+                level.removeBlock(westPos, false);
+                level.removeBlock(eastPos, false);
+            }
 
-                BlockPos rightPos = pPos.relative(facing.getClockWise());
-                BlockState rightState = pLevel.getBlockState(rightPos);
-                if (rightState.getBlock() == ModBlocks.SIDE_ARCANE_POWER_TABLE.get()) {
-                    pLevel.removeBlock(rightPos, false);
-                }
+            if (pState.getValue(ArcanePowerTable.FACING) == Direction.WEST) {
+                BlockPos westPos = pos.offset(0, 0, -1);
+                BlockPos eastPos = pos.offset(0, 0, 1);
+                level.removeBlock(westPos, false);
+                level.removeBlock(eastPos, false);
+            }
+
+            level.removeBlock(pos.above(), false);
+        }
+
+        if (pState.getBlock() != pNewState.getBlock()) {
+            if (level.getBlockEntity(pos) instanceof ArcanePowerTableBlockEntity furnace) {
+                furnace.dropItems();
             }
         }
 
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+        super.onRemove(pState, level, pos, pNewState, pIsMoving);
+    }
+
+    private boolean isPartOfMultiBlock(BlockState targetState, BlockState originalState, Level level, BlockPos targetPos) {
+        if (targetState.getBlock() == ModBlocks.ARCANE_POWER_TABLE.get() ||
+                targetState.getBlock() == ModBlocks.SIDE_ARCANE_POWER_TABLE.get()) {
+
+            Direction targetFacing = targetState.getValue(ArcanePowerTable.FACING);
+            Direction originalFacing = originalState.getValue(ArcanePowerTable.FACING);
+
+            return targetFacing == originalFacing;
+        }
+
+        return false;
     }
 
 
@@ -222,13 +256,49 @@ public class ArcanePowerTable extends Block implements EntityBlock {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (!level.isClientSide) {
-            ArcanePowerTableBlockEntity blockEntity = (ArcanePowerTableBlockEntity) level.getBlockEntity(pos);
-            if (blockEntity != null) {
-                player.displayClientMessage(
-                        Component.literal("Energi: " + blockEntity.getEnergyStored() + " / " + blockEntity.getMaxEnergyStored()),
-                        true
-                );
+
+        if (level.getBlockEntity(pos) instanceof ArcanePowerTableBlockEntity alterBE) {
+
+            ItemStack singleStack = itemStack.copy();
+            singleStack.setCount(1);
+
+            if (!itemStack.isEmpty()) {
+                for (int i = 0; i < 3; i++) {
+                    if (alterBE.isInputEmpty(i)) {
+                        alterBE.setItem(i, singleStack);
+                        itemStack.shrink(1);
+                        level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 2f);
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                }
+            } else {
+                if (!alterBE.isOutputEmpty(0)) {
+                    ItemStack stackOnPedestal = alterBE.getItem(3);
+                    player.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
+                    alterBE.clearOutput(0);
+                    level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+                    return ItemInteractionResult.SUCCESS;
+                }
+
+                for (int i = 0; i < 3; i++) {
+                    if (!alterBE.isInputEmpty(i)) {
+                        ItemStack stackOnPedestal = alterBE.getItem(i);
+                        player.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
+                        alterBE.clearInput(i);
+                        level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+                        return ItemInteractionResult.SUCCESS;
+                    }
+                }
+            }
+
+            if (!level.isClientSide) {
+                ArcanePowerTableBlockEntity blockEntity = (ArcanePowerTableBlockEntity) level.getBlockEntity(pos);
+                if (blockEntity != null) {
+                    player.displayClientMessage(
+                            Component.literal("Arcane Power: " + blockEntity.getEnergyStored() + " / " + blockEntity.getMaxEnergyStored()),
+                            true
+                    );
+                }
             }
         }
         return ItemInteractionResult.SUCCESS;

@@ -24,12 +24,15 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.AURORA_INGOT.get());
         basicItem(ModItems.FATE_BLADE.get());
         basicItem(ModItems.AURORA_SKULL.get());
+        basicItem(ModItems.STONE_SKULL.get());
 
         basicItem(ModItems.AURORA_DUST.get());
         basicItem(ModItems.CLAY_DUST.get());
         basicItem(ModItems.HARD_CLAY_BALL.get());
         basicItem(ModItems.TWIG.get());
         basicItem(ModItems.SKULL_TWIG.get());
+        basicItem(ModItems.MATERIALE_TWIG.get());
+        basicItem(ModItems.NETHERITE_MATERIALE_TWIG.get());
 
         basicItem(ModItems.CLAY_JAR.get());
         basicItem(ModItems.SOFT_CLAY_JAR.get());
@@ -37,6 +40,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.SAPLING_CLAY_JAR.get());
         basicItem(ModItems.FIRE_CLAY_JAR.get());
         basicItem(ModItems.TWIG_CLAY_JAR.get());
+        basicItem(ModItems.MAGIC_CLAY_JAR.get());
     }
 
     private ItemModelBuilder handheldItem(DeferredItem<Item> item) {

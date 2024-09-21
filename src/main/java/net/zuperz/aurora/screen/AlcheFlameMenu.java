@@ -58,42 +58,54 @@ public class AlcheFlameMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
         if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
+            ItemStack stackInSlot = slot.getItem();
+            itemStack = stackInSlot.copy();
 
             if (index < 2) {
-                if (!this.moveItemStackTo(itemstack1, 2, 11, false)) {
-                    if (!this.moveItemStackTo(itemstack1, 11, 38, false)) {
+                if (!moveItemStackTo(stackInSlot, 2, 4, false)) {
+                    if (!moveItemStackTo(stackInSlot, 5, slots.size(), true)) {
                         return ItemStack.EMPTY;
                     }
                 }
-                slot.onQuickCraft(itemstack1, itemstack);
             }
-            else if (index >= 2 && index < 38) {
-                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
+            else if (index < 4) {
+                return ItemStack.EMPTY;
+            }
+            else if (index == 4) {
+                if (!moveItemStackTo(stackInSlot, 5, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             }
-
-            if (itemstack1.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
+            else {
+                if (!moveItemStackTo(stackInSlot, 0, 2, false)) {
+                    if (!moveItemStackTo(stackInSlot, 2, 4, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
             }
 
-            if (itemstack1.getCount() == itemstack.getCount()) {
+            if (stackInSlot.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.set(stackInSlot);
+            }
+
+            slot.setChanged();
+
+            if (stackInSlot.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(player, itemstack1);
+            slot.onTake(player, stackInSlot);
         }
 
-        return itemstack;
+        return itemStack;
     }
+
 
     public boolean isCrafting() {
         return blockentity.getProgress() > 0;

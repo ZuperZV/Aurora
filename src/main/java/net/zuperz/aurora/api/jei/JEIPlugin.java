@@ -62,6 +62,9 @@ public class JEIPlugin implements IModPlugin {
     public static mezz.jei.api.recipe.RecipeType<AuroraAlterRecipe> AURORA_ALTER_TYPE =
             new mezz.jei.api.recipe.RecipeType<>(AuroraAlterRecipeCategory.UID, AuroraAlterRecipe.class);
 
+    public static mezz.jei.api.recipe.RecipeType<ArcanePowerTableRecipe> ARCANE_POWER_TABLE_TYPE =
+            new mezz.jei.api.recipe.RecipeType<>(ArcanePowerTableRecipeCategory.UID, ArcanePowerTableRecipe.class);
+
 
 
     @Override
@@ -91,6 +94,8 @@ public class JEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new AlterRecipeCategory(jeiHelpers.getGuiHelper()));
 
         registration.addRecipeCategories(new AuroraAlterRecipeCategory(jeiHelpers.getGuiHelper()));
+
+        registration.addRecipeCategories(new ArcanePowerTableRecipeCategory(jeiHelpers.getGuiHelper()));
     }
 
 
@@ -142,6 +147,10 @@ public class JEIPlugin implements IModPlugin {
             var aurora_alter = world.getRecipeManager();
             registration.addRecipes(AuroraAlterRecipeCategory.RECIPE_TYPE,
                     getRecipe(aurora_alter, ModRecipes.AURORA_ALTER_RECIPE_TYPE.get()));
+
+            var arcane_power_table = world.getRecipeManager();
+            registration.addRecipes(ArcanePowerTableRecipeCategory.RECIPE_TYPE,
+                    getRecipe(arcane_power_table, ModRecipes.AURORA_POWER_TABLE_RECIPE_TYPE.get()));
         }
 
     }
@@ -192,7 +201,7 @@ public class JEIPlugin implements IModPlugin {
         var aurora_piller_wire_ring = new ItemStack(ModItems.AURORA_DUST.get());
         registration.addRecipeCatalyst(aurora_piller_pedestal_slab_ring, AuroraPillerPedestalSlabRingRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(aurora_piller_ring, AuroraPillerPedestalSlabRingRecipeCategory.RECIPE_TYPE);
-        registration.addRecipeCatalyst(aurora_piller_wire, AuroraPillerPedestalSlabRingRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(aurora_piller_wire_ring, AuroraPillerPedestalSlabRingRecipeCategory.RECIPE_TYPE);
 
         var block_1 = new ItemStack(Blocks.GRASS_BLOCK);
         var block_2 = new ItemStack(Blocks.DIRT);
@@ -217,6 +226,9 @@ public class JEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(aurora_alter, AuroraAlterRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(aurora_alter2, AuroraAlterRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(aurora_alter3, AuroraAlterRecipeCategory.RECIPE_TYPE);
+
+        var arcane_power_table = new ItemStack(ModBlocks.ARCANE_POWER_TABLE.get());
+        registration.addRecipeCatalyst(arcane_power_table, ArcanePowerTableRecipeCategory.RECIPE_TYPE);
 
     }
 

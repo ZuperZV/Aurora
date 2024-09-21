@@ -53,6 +53,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                                 .add(LootItem.lootTableItem(ModItems.AURORA_DUST.get()))
                         )
         );
+
         this.add(ModBlocks.CLAY_WIRE.get(),
                 block -> LootTable.lootTable()
                         .withPool(LootPool.lootPool()
@@ -74,6 +75,14 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModBlocks.BEAM.get()))
+                        )
+        );
+
+        this.add(ModBlocks.SIDE_ARCANE_POWER_TABLE.get(),
+                block -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModBlocks.ARCANE_POWER_TABLE.get()))
                         )
         );
 

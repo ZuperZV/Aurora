@@ -1,0 +1,15 @@
+{
+  "type": "aurora:in_world_block",
+  "block_1": {
+    "item": "minecraft:stone_bricks"
+  },
+  "block_2": {
+    "item": "minecraft:lodestone"
+  },
+  "block_3": {
+    "item": "minecraft:stone_bricks"
+  },
+  "output": {
+    "item": "aurora:arcane_power_table"
+  }
+}

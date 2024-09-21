@@ -1,0 +1,15 @@
+{
+  "type": "aurora:aurora_power_table",
+  "ingredient1": {
+    "item": "minecraft:gold_ingot"
+  },
+  "ingredient2": {
+    "item": "aurora:materiale_twig"
+  },
+  "ingredient3": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "output": {
+    "item": "aurora:netherite_materiale_twig"
+  }
+}

@@ -1,4 +1,4 @@
-// 1.21	2024-09-11T22:37:36.8402605	Recipes
+// 1.21	2024-09-21T15:02:46.1499942	Recipes
 302b96fa56e99b73f71004d70cae5dda97b29722 data/aurora/advancement/recipes/misc/alche_flame.json
 b28aecaf7966e0a98d997f302747afc5ce55240f data/aurora/advancement/recipes/misc/charcoal_from_twig.json
 80b7bba7b565163c56dac97af514f453fc0f131e data/aurora/advancement/recipes/misc/clay_dust.json
@@ -14,4 +14,6 @@ b81438a84a484e615edd5221ba8e67fcae9f7ee7 data/aurora/recipe/charcoal_from_twig.j
 8ee68c45b71cef718f52cd188d977a3925575800 data/aurora/recipe/pedestal_slab.json
 444594f8206d078255c4a65f82f931bb12e49b80 data/aurora/recipe/soft_clay_jar.json
 145e726b686c8d5282faf0c9b81f216a43f40399 data/minecraft/advancement/recipes/misc/charcoal.json
+aab924e934297446c716670112c8f0d9d01fe012 data/minecraft/advancement/recipes/misc/cyan_dye.json
 06129597443452c47d17f3dbbada020261463853 data/minecraft/recipe/charcoal.json
+41051bd0e1e58bd7e36789ccac79417908b0985f data/minecraft/recipe/cyan_dye.json

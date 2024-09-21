@@ -29,6 +29,7 @@ import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
 import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
+import net.zuperz.aurora.block.entity.custom.ArcanePowerTableBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class Alter extends Block implements EntityBlock {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
@@ -97,7 +98,6 @@ public class Alter extends Block implements EntityBlock {
                 singleStack.setCount(1);
 
                 if (!pStack.isEmpty()) {
-                    // Try to insert into input slots first
                     for (int i = 0; i < 5; i++) {
                         if (alterBE.isInputEmpty(i)) {
                             alterBE.setItem(i, singleStack);
@@ -107,7 +107,6 @@ public class Alter extends Block implements EntityBlock {
                         }
                     }
                 } else {
-                    // Try to extract from output slot
                     if (!alterBE.isOutputEmpty(0)) {
                         ItemStack stackOnPedestal = alterBE.getItem(5);
                         pPlayer.setItemInHand(InteractionHand.MAIN_HAND, stackOnPedestal);
@@ -116,7 +115,6 @@ public class Alter extends Block implements EntityBlock {
                         return ItemInteractionResult.SUCCESS;
                     }
 
-                    // If output slot is empty, try to extract from input slots
                     for (int i = 0; i < 5; i++) {
                         if (!alterBE.isInputEmpty(i)) {
                             ItemStack stackOnPedestal = alterBE.getItem(i);

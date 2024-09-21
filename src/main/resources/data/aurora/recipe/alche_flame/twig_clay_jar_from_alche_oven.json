@@ -1,11 +1,12 @@
 {
   "type": "aurora:alche_flame",
-  "ingredient": {
-    "item": "aurora:clay_jar"
-  },
 
   "furnace_ingredient": {
-  "item": "aurora:twig"
+    "item": "aurora:twig"
+  },
+
+  "ingredient": {
+    "item": "aurora:clay_jar"
   },
 
   "output": {
