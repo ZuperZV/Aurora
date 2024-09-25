@@ -43,6 +43,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("arcane_power_table_block_entity", () -> BlockEntityType.Builder.of(
                     ArcanePowerTableBlockEntity::new, ModBlocks.ARCANE_POWER_TABLE.get()).build(null));
 
+    public static final Supplier<BlockEntityType<ArcanePedestalBlockEntity>> ARCANE_PEDESTAL_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("arcane_pedestal_block_entity", () -> BlockEntityType.Builder.of(
+                    ArcanePedestalBlockEntity::new, ModBlocks.ARCANE_PEDESTAL.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

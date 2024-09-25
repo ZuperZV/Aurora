@@ -250,21 +250,11 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, inputItems.getStackInSlot(i));
         }
 
-        // Check for Aurora wire first and use AuroraAlterRecipe
-        Optional<RecipeHolder<AuroraAlterRecipe>> auroraRecipeOptional = level.getRecipeManager()
-                .getRecipeFor(ModRecipes.AURORA_ALTER_RECIPE_TYPE.get(), getRecipeInput(inventory), level);
+        Optional<RecipeHolder<AlterRecipe>> auroraRecipeOptional = level.getRecipeManager()
+                .getRecipeFor(ModRecipes.ALTER_RECIPE_TYPE.get(), getRecipeInput(inventory), level);
 
         if (auroraRecipeOptional.isPresent()) {
             craftWithRecipe(auroraRecipeOptional.get().value(), inventory);
-            return;  // Exit after crafting
-        }
-
-        // Check for Clay wire and use AlterRecipe if Aurora recipe wasn't found
-        Optional<RecipeHolder<AlterRecipe>> recipeOptional = level.getRecipeManager()
-                .getRecipeFor(ModRecipes.ALTER_RECIPE_TYPE.get(), getRecipeInput(inventory), level);
-
-        if (recipeOptional.isPresent()) {
-            craftWithRecipe(recipeOptional.get().value(), inventory);
         }
     }
 
@@ -284,7 +274,6 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
             existingOutput.grow(amountToAdd);
         }
 
-        // Remove items from input slots after crafting
         for (int i = 0; i < inputItems.getSlots(); i++) {
             inputItems.extractItem(i, 1, false);
         }

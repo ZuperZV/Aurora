@@ -56,6 +56,9 @@ public class ModRecipes {
     public static final Supplier<RecipeType<ArcanePowerTableRecipe>> AURORA_POWER_TABLE_RECIPE_TYPE =
             RECIPE_TYPES.register("aurora_power_table", () -> ArcanePowerTableRecipe.Type.INSTANCE);
 
+    public static final Supplier<RecipeType<ArcanePedestalRecipe>> ARCANE_PEDESTAL_RECIPE_TYPE =
+            RECIPE_TYPES.register("arcane_pedestal", () -> ArcanePedestalRecipe.Type.INSTANCE);
+
 
 
     public static final Supplier<RecipeSerializer<MyBlockRecipe>> MY_BLOCK_SERIALIZER =
@@ -93,4 +96,7 @@ public class ModRecipes {
 
     public static final Supplier<RecipeSerializer<ArcanePowerTableRecipe>> AURORA_POWER_TABLE_SERIALIZER =
             SERIALIZERS.register("aurora_power_table", () -> ArcanePowerTableRecipe.Serializer.INSTANCE);
+
+    public static final Supplier<RecipeSerializer<ArcanePedestalRecipe>> ARCANE_PEDESTAL_SERIALIZER =
+            SERIALIZERS.register("arcane_pedestal", () -> ArcanePedestalRecipe.Serializer.INSTANCE);
 }

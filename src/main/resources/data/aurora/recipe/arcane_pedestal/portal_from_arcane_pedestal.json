@@ -1,0 +1,9 @@
+{
+  "type": "aurora:arcane_pedestal",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "output": {
+    "item": "minecraft:stone"
+  }
+}

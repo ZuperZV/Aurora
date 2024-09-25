@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aurora:block/rift"
+    },
+    "axis=z": {
+      "model": "aurora:block/rift_2"
+    }
+  }
+}

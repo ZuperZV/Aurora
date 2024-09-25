@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.ARCANE_POWER_TABLE.get());
                         pOutput.accept(ModBlocks.ALTER.get());
                         pOutput.accept(ModBlocks.BEAM.get());
+                        pOutput.accept(ModBlocks.ARCANE_PEDESTAL.get());
                         pOutput.accept(ModBlocks.AURORA_PILLER.get());
                         pOutput.accept(ModBlocks.BLUESTONE.get());
                         pOutput.accept(ModItems.SOFT_CLAY_JAR.get());

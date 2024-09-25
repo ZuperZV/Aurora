@@ -9,6 +9,12 @@
     "aurora:alche_flame",
     "aurora:alter",
     "aurora:beam",
-    "aurora:upper_beam"
+    "aurora:upper_beam",
+    "aurora:side_arcane_power_table",
+    "aurora:arcane_power_table",
+    "aurora:arcane_pedestal",
+    "aurora:cobble_void_stone",
+    "aurora:void_stone",
+    "aurora:luminous_void_stone"
   ]
 }

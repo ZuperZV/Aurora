@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aurora:block/arcane_pedestal",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "aurora:block/arcane_pedestal"
+    },
+    "facing=south": {
+      "model": "aurora:block/arcane_pedestal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "aurora:block/arcane_pedestal",
+      "y": 270
+    }
+  }
+}

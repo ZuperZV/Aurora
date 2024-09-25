@@ -1,0 +1,84 @@
+{
+  "carvers": {},
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 1708059,
+    "grass_color": 1708059,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "sky_color": 0,
+    "water_color": 0,
+    "water_fog_color": 0
+  },
+  "features": [
+    [],
+    [],
+    [
+      "aurora:luminous_ore_placed",
+      "aurora:cobble_void_stone_placed"
+    ],
+    [
+      "minecraft:fossil_upper",
+      "minecraft:fossil_lower"
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_dirt",
+      "minecraft:ore_gravel",
+      "minecraft:ore_granite_upper",
+      "minecraft:ore_granite_lower",
+      "minecraft:ore_diorite_upper",
+      "minecraft:ore_diorite_lower",
+      "minecraft:ore_andesite_upper",
+      "minecraft:ore_andesite_lower",
+      "minecraft:ore_tuff"
+    ],
+    [],
+    [],
+    [
+      "minecraft:glow_lichen",
+      "minecraft:patch_sugar_cane_badlands",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_cactus_decorated",
+      "minecraft:flower_swamp",
+      "minecraft:patch_grass_normal",
+      "minecraft:patch_dead_bush",
+      "minecraft:patch_waterlily",
+      "minecraft:red_mushroom_swamp",
+      "aurora:void_grass_placed"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:frog",
+        "maxCount": 3,
+        "minCount": 2,
+        "weight": 1
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "minecraft:slime",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 2
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.0
+}

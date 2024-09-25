@@ -32,8 +32,6 @@ public class UpperBeamBlock extends BarrierBlock {
             box(3, -13, 3, 13, 8, 13)
     );
 
-
-
     public UpperBeamBlock(Properties p_49092_) {
         super(p_49092_);
     }

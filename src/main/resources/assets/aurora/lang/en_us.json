@@ -31,5 +31,11 @@
   "item.aurora.sapling_clay_jar": "Sapling Clay Jar",
   "item.aurora.fire_clay_jar": "Fire Clay Jar",
   "item.aurora.twig_clay_jar": "Twig Clay Jar",
-  "item.aurora.magic_clay_jar": "Magic Clay Jar"
+  "item.aurora.magic_clay_jar": "Magic Clay Jar",
+  "block.aurora.arcane_pedestal": "Arcane Pedestal",
+
+  "block.aurora.cobble_void_stone": "Cobble Void Stone",
+  "block.aurora.void_stone": "Void Stone",
+  "block.aurora.luminous_void_stone": "Luminous Void Stone",
+  "block.aurora.void_grass": "Void Grass"
 }

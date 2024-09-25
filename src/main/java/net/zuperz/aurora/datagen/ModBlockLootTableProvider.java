@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
@@ -43,8 +44,15 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.AURORA_PILLER.get());
         dropSelf(ModBlocks.BEAM.get());
+        dropSelf(ModBlocks.ARCANE_PEDESTAL.get());
 
         dropSelf(ModBlocks.ARCANE_POWER_TABLE.get());
+        dropSelf(ModBlocks.LUMINOUS_VOID_STONE.get());
+
+        dropSelf(ModBlocks.COBBLE_VOID_STONE.get());
+        this.add(ModBlocks.VOID_GRASS.get(), block -> this.createShearsDispatchTable(block, (LootPoolEntryContainer.Builder<?>)this.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F))))));
+
+        this.add(ModBlocks.VOID_STONE.get(), block -> this.createSingleItemTableWithSilkTouch(block, ModBlocks.COBBLE_VOID_STONE));
 
         this.add(ModBlocks.AURORA_WIRE.get(),
                 block -> LootTable.lootTable()

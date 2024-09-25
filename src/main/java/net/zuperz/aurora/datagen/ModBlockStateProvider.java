@@ -54,8 +54,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
         horizontalBlock(ModBlocks.SIDE_ARCANE_POWER_TABLE.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/side_arcane_power_table")));
 
+        horizontalBlock(ModBlocks.ARCANE_PEDESTAL.get(),
+                new ModelFile.UncheckedModelFile(modLoc("block/arcane_pedestal")));
+
+        simpleBlock(ModBlocks.VOID_GRASS.get(),
+                models().cross(blockTexture(ModBlocks.VOID_GRASS.get()).getPath(), blockTexture(ModBlocks.VOID_GRASS.get())).renderType("cutout"));
+
         blockWithItem(ModBlocks.BLUESTONE);
         blockWithItem(ModBlocks.STONE_SKULL_STONE);
+
+        blockWithItem(ModBlocks.COBBLE_VOID_STONE);
+        blockWithItem(ModBlocks.VOID_STONE);
+        blockWithItem(ModBlocks.LUMINOUS_VOID_STONE);
     }
 
     private void blockWithItem(DeferredBlock<Block> deferredBlock) {

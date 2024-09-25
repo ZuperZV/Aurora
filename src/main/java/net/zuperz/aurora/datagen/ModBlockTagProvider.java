@@ -28,7 +28,13 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.ALCHE_FLAME.get())
                 .add(ModBlocks.ALTER.get())
                 .add(ModBlocks.BEAM.get())
-                .add(ModBlocks.UPPER_BEAM.get());
+                .add(ModBlocks.UPPER_BEAM.get())
+                .add(ModBlocks.SIDE_ARCANE_POWER_TABLE.get())
+                .add(ModBlocks.ARCANE_POWER_TABLE.get())
+                .add(ModBlocks.ARCANE_PEDESTAL.get())
+                .add(ModBlocks.COBBLE_VOID_STONE.get())
+                .add(ModBlocks.VOID_STONE.get())
+                .add(ModBlocks.LUMINOUS_VOID_STONE.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.AURORA_PEDESTAL.get())
@@ -40,7 +46,13 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.ALCHE_FLAME.get())
                 .add(ModBlocks.ALTER.get())
                 .add(ModBlocks.BEAM.get())
-                .add(ModBlocks.UPPER_BEAM.get());
+                .add(ModBlocks.UPPER_BEAM.get())
+                .add(ModBlocks.SIDE_ARCANE_POWER_TABLE.get())
+                .add(ModBlocks.ARCANE_POWER_TABLE.get())
+                .add(ModBlocks.ARCANE_PEDESTAL.get())
+                .add(ModBlocks.COBBLE_VOID_STONE.get())
+                .add(ModBlocks.VOID_STONE.get())
+                .add(ModBlocks.LUMINOUS_VOID_STONE.get());
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
         ;

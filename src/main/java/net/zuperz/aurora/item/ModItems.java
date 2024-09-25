@@ -73,6 +73,10 @@ public class ModItems {
     public static final DeferredItem<Item> MAGIC_CLAY_JAR = ITEMS.register("magic_clay_jar",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> CURSED_TOTEM = ITEMS.register("cursed_totem",
+            () -> new CurseTotemItem(new Item.Properties().stacksTo(1)));
+
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

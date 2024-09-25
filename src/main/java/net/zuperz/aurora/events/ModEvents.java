@@ -9,12 +9,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.custom.ArcanePowerTable;
 import net.zuperz.aurora.item.ModItems;
+import net.zuperz.aurora.item.custom.CurseTotemItem;
 import net.zuperz.aurora.item.custom.SaplingClayJarItem;
 import net.zuperz.aurora.item.custom.StoneSkullTwig;
 
@@ -128,5 +131,28 @@ public class ModEvents {
         }
 
         return null;
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            CurseTotemItem totem = null;
+            ItemStack totemStack = null;
+
+            for (ItemStack itemStack : player.getInventory().items) {
+                if (itemStack.getItem() instanceof CurseTotemItem) {
+                    totem = (CurseTotemItem) itemStack.getItem();
+                    totemStack = itemStack;
+                    break;
+                }
+            }
+
+            if (totem != null && player.getHealth() <= 0.0F) {
+                event.setCanceled(true);
+                totem.activateTotem(player, totemStack);
+                event.setCanceled(true);
+            }
+        }
     }
 }

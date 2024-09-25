@@ -90,6 +90,7 @@ public class aurora {
             event.registerBlockEntityRenderer(ModBlockEntities.SLAB_BE.get(), PedestalSlabBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.ALTER_BE.get(), AlterBlockEntityRenderer::new);
             event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_POWER_TABLE_BLOCK_ENTITY.get(), ArcanePowerTableBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_PEDESTAL_BLOCK_ENTITY.get(), ArcanePedestalBlockEntityRenderer::new);
         }
 
         @SubscribeEvent
