@@ -1,0 +1,9 @@
+{
+  "type": "aurora:pedestal_slab_clay",
+  "ingredient": {
+    "item": "aurora:void_stone"
+  },
+  "output": {
+    "item": "aurora:void_stone_shard"
+  }
+}

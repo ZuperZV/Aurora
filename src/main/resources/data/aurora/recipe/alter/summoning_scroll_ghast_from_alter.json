@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "minecraft:ghast_tear"
+  },
+  "ingredient2": {
+    "item": "minecraft:bone"
+  },
+  "ingredient3": {
+    "item": "minecraft:fermented_spider_eye"
+  },
+  "ingredient4": {
+    "item": "minecraft:nether_wart"
+  },
+  "ingredient5": {
+    "item": "minecraft:paper"
+  },
+  "output": {
+    "item": "aurora:summoning_scroll_ghast"
+  }
+}

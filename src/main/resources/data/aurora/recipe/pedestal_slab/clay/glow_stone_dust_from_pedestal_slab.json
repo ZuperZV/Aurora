@@ -1,0 +1,9 @@
+{
+  "type": "aurora:pedestal_slab_clay",
+  "ingredient": {
+    "item": "aurora:bluestone_dust"
+  },
+  "output": {
+    "item": "minecraft:glowstone_dust"
+  }
+}

@@ -1,10 +1,6 @@
 package net.zuperz.aurora.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
@@ -20,24 +16,18 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.zuperz.aurora.block.ModBlocks;
-import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
-import net.zuperz.aurora.block.entity.custom.AlterBlockEntity;
-import net.zuperz.aurora.block.entity.custom.ArcanePowerTableBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class Alter extends Block implements EntityBlock {
+public class AlterBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 12, 16);
-    public Alter(Properties properties) {
+    public AlterBlock(Properties properties) {
         super(Properties.of());
     }
 
@@ -92,7 +82,7 @@ public class Alter extends Block implements EntityBlock {
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof AlterBlockEntity alterBE) {
-            if (Alter.arePedestalPositionsClayWire(pLevel, pPos) || Alter.arePedestalPositionsAuroraWire(pLevel, pPos)) {
+            if (AlterBlock.arePedestalPositionsClayWire(pLevel, pPos) || AlterBlock.arePedestalPositionsAuroraWire(pLevel, pPos)) {
 
                 ItemStack singleStack = pStack.copy();
                 singleStack.setCount(1);

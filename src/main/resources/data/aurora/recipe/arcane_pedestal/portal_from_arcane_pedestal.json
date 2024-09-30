@@ -1,9 +1,11 @@
 {
   "type": "aurora:arcane_pedestal",
+
   "ingredient": {
-    "item": "minecraft:diamond"
+    "item": "aurora:stone_skull"
   },
+
   "output": {
-    "item": "minecraft:stone"
+    "item": "aurora:rift"
   }
 }

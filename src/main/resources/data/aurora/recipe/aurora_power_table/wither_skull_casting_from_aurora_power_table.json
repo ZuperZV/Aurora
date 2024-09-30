@@ -1,0 +1,15 @@
+{
+  "type": "aurora:aurora_power_table",
+  "ingredient1": {
+    "tag": "aurora:summoning_scroll"
+  },
+  "ingredient2": {
+    "item": "minecraft:wither_skeleton_skull"
+  },
+  "ingredient3": {
+    "item": "aurora:extracter_clay_jar"
+  },
+  "output": {
+    "item": "aurora:wither_skull_casting"
+  }
+}

@@ -48,7 +48,7 @@ public class ModConfiguredFeatures {
         List<OreConfiguration.TargetBlockState> LuminousOre = List.of(OreConfiguration.target(voidstoneReplaceabele,
                         ModBlocks.LUMINOUS_VOID_STONE.get().defaultBlockState()));
 
-        register(context, LUMINOUS_ORE_KEY, Feature.ORE, new OreConfiguration(LuminousOre, 8));
+        register(context, LUMINOUS_ORE_KEY, Feature.ORE, new OreConfiguration(LuminousOre, 12));
 
         List<OreConfiguration.TargetBlockState> cobbleVoidStone = List.of(OreConfiguration.target(voidstoneReplaceabele,
                 ModBlocks.COBBLE_VOID_STONE.get().defaultBlockState()));

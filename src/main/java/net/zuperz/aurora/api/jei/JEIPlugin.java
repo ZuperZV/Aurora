@@ -65,6 +65,9 @@ public class JEIPlugin implements IModPlugin {
     public static mezz.jei.api.recipe.RecipeType<ArcanePowerTableRecipe> ARCANE_POWER_TABLE_TYPE =
             new mezz.jei.api.recipe.RecipeType<>(ArcanePowerTableRecipeCategory.UID, ArcanePowerTableRecipe.class);
 
+    public static mezz.jei.api.recipe.RecipeType<ArcanePedestalRecipe> ARCANE_PEDESTAL_TYPE =
+            new mezz.jei.api.recipe.RecipeType<>(ArcanePedestalRecipeCategory.UID, ArcanePedestalRecipe.class);
+
 
 
     @Override
@@ -96,6 +99,8 @@ public class JEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new AuroraAlterRecipeCategory(jeiHelpers.getGuiHelper()));
 
         registration.addRecipeCategories(new ArcanePowerTableRecipeCategory(jeiHelpers.getGuiHelper()));
+
+        registration.addRecipeCategories(new ArcanePedestalRecipeCategory(jeiHelpers.getGuiHelper()));
     }
 
 
@@ -151,6 +156,10 @@ public class JEIPlugin implements IModPlugin {
             var arcane_power_table = world.getRecipeManager();
             registration.addRecipes(ArcanePowerTableRecipeCategory.RECIPE_TYPE,
                     getRecipe(arcane_power_table, ModRecipes.AURORA_POWER_TABLE_RECIPE_TYPE.get()));
+
+            var arcane_pedestal = world.getRecipeManager();
+            registration.addRecipes(ArcanePedestalRecipeCategory.RECIPE_TYPE,
+                    getRecipe(arcane_pedestal, ModRecipes.ARCANE_PEDESTAL_RECIPE_TYPE.get()));
         }
 
     }
@@ -183,6 +192,11 @@ public class JEIPlugin implements IModPlugin {
         var pedestal_slab_wire_clay = new ItemStack(ModItems.CLAY_DUST.get());
         registration.addRecipeCatalyst(pedestal_slab_clay, PedestalSlabClayRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(pedestal_slab_wire_clay, PedestalSlabClayRecipeCategory.RECIPE_TYPE);
+
+        var arcane_pedestal_clay = new ItemStack(ModBlocks.ARCANE_PEDESTAL.get());
+        var arcane_pedestal_wire_clay = new ItemStack(ModBlocks.BEAM.get());
+        registration.addRecipeCatalyst(arcane_pedestal_clay, ArcanePedestalRecipeCategory.RECIPE_TYPE);
+        registration.addRecipeCatalyst(arcane_pedestal_wire_clay, ArcanePedestalRecipeCategory.RECIPE_TYPE);
 
         var pedestal_slab_ring_clay = new ItemStack(ModBlocks.PEDESTAL_SLAB.get());
         var pedestal_slab_ring_wire_clay = new ItemStack(ModItems.CLAY_DUST.get());

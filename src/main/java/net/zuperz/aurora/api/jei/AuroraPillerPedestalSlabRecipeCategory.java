@@ -27,7 +27,8 @@ public class AuroraPillerPedestalSlabRecipeCategory implements IRecipeCategory<A
     public final static ResourceLocation BLOCK = ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "textures/gui/pedestal_slab_block.png");
     public final static ResourceLocation ARROWBACK = ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "textures/gui/null_magi_slab.png");
     private final IDrawable background;
-    private final IDrawable icon;
+    private final IDrawable icon1;
+    private final IDrawable icon2;
 
     private final IDrawableStatic Block;
 
@@ -41,7 +42,8 @@ public class AuroraPillerPedestalSlabRecipeCategory implements IRecipeCategory<A
         ResourceLocation ARROW = ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "textures/gui/magi_slab.png");
 
         this.background = helper.createBlankDrawable(100, 60);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PEDESTAL_SLAB.get()));
+        this.icon1 = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.PEDESTAL_SLAB.get()));
+        this.icon2 = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.AURORA_PILLER.get()));
 
         IDrawableStatic progressDrawable = helper.drawableBuilder(ARROW, 0, 0, 100, 60).setTextureSize(100, 60).addPadding(0, 0, 0, 0).build();
 
@@ -86,7 +88,7 @@ public class AuroraPillerPedestalSlabRecipeCategory implements IRecipeCategory<A
 
     @Override
     public IDrawable getIcon() {
-        return this.icon;
+        return new CompositeDrawable(icon1, icon2);
     }
 
     @Override
@@ -96,5 +98,35 @@ public class AuroraPillerPedestalSlabRecipeCategory implements IRecipeCategory<A
                 .addIngredients(recipe.getIngredients().get(0));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 42, 9).addItemStack(recipe.output);
+    }
+
+    public class CompositeDrawable implements IDrawable {
+        private final IDrawable icon1;
+        private final IDrawable icon2;
+
+        public CompositeDrawable(IDrawable icon1, IDrawable icon2) {
+            this.icon1 = icon1;
+            this.icon2 = icon2;
+        }
+
+        @Override
+        public void draw(GuiGraphics guiGraphics, int x, int y) {
+            int icon2X = x;
+            int icon2Y = y + icon1.getHeight() - icon2.getHeight();
+
+            icon2.draw(guiGraphics, icon2X, icon2Y -3);
+
+            icon1.draw(guiGraphics, x, y +1);
+        }
+
+        @Override
+        public int getWidth() {
+            return icon1.getWidth();
+        }
+
+        @Override
+        public int getHeight() {
+            return icon1.getHeight();
+        }
     }
 }

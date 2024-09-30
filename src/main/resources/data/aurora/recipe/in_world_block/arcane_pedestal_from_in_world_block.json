@@ -1,0 +1,15 @@
+{
+  "type": "aurora:in_world_block",
+  "block_1": {
+    "item": "aurora:skull_twig"
+  },
+  "block_2": {
+    "item": "minecraft:stone_brick_slab"
+  },
+  "block_3": {
+    "item": "minecraft:lodestone"
+  },
+  "output": {
+    "item": "aurora:arcane_pedestal"
+  }
+}

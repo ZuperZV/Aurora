@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "ingredient2": {
+    "item": "aurora:hard_clay_ball"
+  },
+  "ingredient3": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "ingredient4": {
+    "item": "aurora:void_stone_shard"
+  },
+  "ingredient5": {
+    "item": "aurora:glow_stone_shard"
+  },
+  "output": {
+    "item": "aurora:bluestone_shard"
+  }
+}

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sapling": {
+    "has_cobble_void_stone": {
       "conditions": {
         "items": [
           {
-            "items": "#minecraft:saplings"
+            "items": "aurora:cobble_void_stone"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:charcoal"
+        "recipe": "aurora:void_stone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sapling"
+      "has_cobble_void_stone"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:charcoal"
+      "aurora:void_stone"
     ]
   }
 }

@@ -1,4 +1,4 @@
-// 1.21	2024-09-23T20:29:38.977859	Loot Tables
+// 1.21	2024-09-29T12:50:55.5969078	Loot Tables
 0bde2920a5e8a30a56c6f3574444ee544ffce942 data/aurora/loot_table/blocks/alche_flame.json
 f43f746f9a25553012058fd9b2737923baae3f40 data/aurora/loot_table/blocks/alter.json
 630469f3667ea48957a8a755fc2962dfcfa99638 data/aurora/loot_table/blocks/arcane_pedestal.json
@@ -11,7 +11,7 @@ d83188d7c8ff7d4683d38fc0dccf180f91024f0b data/aurora/loot_table/blocks/aurora_wi
 3dc5ed6918b35d2b41fa5f51f50e0a72bf6ffe1a data/aurora/loot_table/blocks/clay_wire.json
 6357e40b4924e1f4d59e99c6756902418dbea6ae data/aurora/loot_table/blocks/cobble_void_stone.json
 6a4389c76c58f2c5d50cecc12681ffa184d11417 data/aurora/loot_table/blocks/golden_cauldron.json
-8484cfdadaeddd233846bea55d5381d2fc12a53d data/aurora/loot_table/blocks/luminous_void_stone.json
+483af959eaf71c320e4a750b50cf7f0c7d069733 data/aurora/loot_table/blocks/luminous_void_stone.json
 5f3c955efe421568a1edbe44434bc1078fe92560 data/aurora/loot_table/blocks/my_block.json
 d3eb31380bf23de5026d76204257ea4e3f264ff3 data/aurora/loot_table/blocks/pedestal_slab.json
 19e076c25dd5488be7ae87e88f43804eb34e5ca4 data/aurora/loot_table/blocks/side_arcane_power_table.json

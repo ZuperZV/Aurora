@@ -1,7 +1,7 @@
 {
   "type": "aurora:in_world_block",
   "block_1": {
-    "item": "minecraft:barrier"
+    "item": "aurora:air"
   },
   "block_2": {
     "item": "aurora:skull_twig"

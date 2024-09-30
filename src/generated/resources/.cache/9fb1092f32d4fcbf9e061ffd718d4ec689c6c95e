@@ -1,19 +1,23 @@
-// 1.21	2024-09-21T15:02:46.1499942	Recipes
+// 1.21	2024-09-29T19:33:21.3305068	Recipes
 302b96fa56e99b73f71004d70cae5dda97b29722 data/aurora/advancement/recipes/misc/alche_flame.json
+2c22d28ec744d2bbd7ebe22a498e2976684e4764 data/aurora/advancement/recipes/misc/bluestone.json
+ee4a0de9f56190321f34b70338f2908fd43a492c data/aurora/advancement/recipes/misc/charcoal_from_saplings.json
 b28aecaf7966e0a98d997f302747afc5ce55240f data/aurora/advancement/recipes/misc/charcoal_from_twig.json
 80b7bba7b565163c56dac97af514f453fc0f131e data/aurora/advancement/recipes/misc/clay_dust.json
 0d80bae55f58db1992e75407f01b60975f00ec26 data/aurora/advancement/recipes/misc/clay_jar.json
 80fd98824d33cb2a266b7466cfcca405f9c26556 data/aurora/advancement/recipes/misc/clay_jar_from_blasting.json
 4a8b5a1bc1297f79af991f32d3d276420b9f8bb9 data/aurora/advancement/recipes/misc/pedestal_slab.json
 938ddd697c3232e91cf16d1c3553bb12d1b6e194 data/aurora/advancement/recipes/misc/soft_clay_jar.json
+3d1569964aed137843d6d2c4bf8e1c35bdcfe714 data/aurora/advancement/recipes/misc/void_stone.json
 16af6d23de2e29e276e7e048caf563f20f58de5a data/aurora/recipe/alche_flame.json
-b81438a84a484e615edd5221ba8e67fcae9f7ee7 data/aurora/recipe/charcoal_from_twig.json
+fef7c80a5fc272bea0d1b359ab22caa5cd23f3bf data/aurora/recipe/bluestone.json
+06129597443452c47d17f3dbbada020261463853 data/aurora/recipe/charcoal_from_saplings.json
+8aaeb11465b570850d59fd5791b9f61245a56f8a data/aurora/recipe/charcoal_from_twig.json
 64e2533a2578080f6984f551b8f837b1101c08a5 data/aurora/recipe/clay_dust.json
 1fd6ac820fdc23d151ce1744ac7d83d195fa8c20 data/aurora/recipe/clay_jar.json
 70ca94b7b45ddbd5420bbc87ff6448dcf48f3e1f data/aurora/recipe/clay_jar_from_blasting.json
 8ee68c45b71cef718f52cd188d977a3925575800 data/aurora/recipe/pedestal_slab.json
 444594f8206d078255c4a65f82f931bb12e49b80 data/aurora/recipe/soft_clay_jar.json
-145e726b686c8d5282faf0c9b81f216a43f40399 data/minecraft/advancement/recipes/misc/charcoal.json
+5307cec56f8e4a726711837c501121c8347b2aa3 data/aurora/recipe/void_stone.json
 aab924e934297446c716670112c8f0d9d01fe012 data/minecraft/advancement/recipes/misc/cyan_dye.json
-06129597443452c47d17f3dbbada020261463853 data/minecraft/recipe/charcoal.json
 41051bd0e1e58bd7e36789ccac79417908b0985f data/minecraft/recipe/cyan_dye.json

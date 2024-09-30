@@ -1,6 +1,7 @@
 package net.zuperz.aurora.block.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,11 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,15 +29,16 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 import net.zuperz.aurora.Recipes.*;
-import net.zuperz.aurora.block.ModBlocks;
-import net.zuperz.aurora.block.custom.Alter;
-import net.zuperz.aurora.block.entity.ItemHandler.ContainerRecipeInput;
+import net.zuperz.aurora.block.custom.AlterBlock;
 import net.zuperz.aurora.block.entity.ItemHandler.CustomItemHandler;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.screen.AlterMenu;
-import net.zuperz.aurora.screen.MyMenu;
+import net.zuperz.aurora.util.InventoryDirectionEntry;
+import net.zuperz.aurora.util.InventoryDirectionWrapper;
+import net.zuperz.aurora.util.WrappedHandler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -57,7 +57,6 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
     private int maxProgress = 300;
 
     private static final int MAX_DISTANCE = 20;
-    private static final int ENERGY_CONSUMPTION_PER_TICK = 5;
 
     public AlterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ALTER_BE.get(), pos, state);
@@ -85,6 +84,16 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
             }
         };
     }
+
+    private final Map<Direction, Optional<WrappedHandler>> directionWrappedHandlerMap =
+            new InventoryDirectionWrapper(itemHandler,
+                    new InventoryDirectionEntry(Direction.DOWN, outputItems.getSlots(), false),
+                    new InventoryDirectionEntry(Direction.NORTH, inputItems.getSlots(), true),
+                    new InventoryDirectionEntry(Direction.SOUTH, inputItems.getSlots(), true),
+                    new InventoryDirectionEntry(Direction.EAST, inputItems.getSlots(), true),
+                    new InventoryDirectionEntry(Direction.WEST, inputItems.getSlots(), true),
+                    new InventoryDirectionEntry(Direction.UP, outputItems.getSlots(), false)).directionsMap;
+
 
     public void tick() {
         ArcanePowerTableBlockEntity arcanePowerTable = findNearestArcanePowerTable(this.getBlockPos());
@@ -180,8 +189,8 @@ public class AlterBlockEntity extends BlockEntity implements MenuProvider {
         BlockPos pos = this.getBlockPos();
 
         // Check for wire configuration (Clay or Aurora)
-        boolean hasAuroraWire = Alter.arePedestalPositionsAuroraWire(level, pos);
-        boolean hasClayWire = Alter.arePedestalPositionsClayWire(level, pos);
+        boolean hasAuroraWire = AlterBlock.arePedestalPositionsAuroraWire(level, pos);
+        boolean hasClayWire = AlterBlock.arePedestalPositionsClayWire(level, pos);
 
         if (!hasAuroraWire && !hasClayWire) {
             return false; // No valid configuration, return false

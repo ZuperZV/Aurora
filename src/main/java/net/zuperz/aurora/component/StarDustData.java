@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class StarDustData {
 
-    private final int value1;
+    private int value1;
 
     public StarDustData(int value1) {
         this.value1 = value1;
@@ -15,6 +15,10 @@ public class StarDustData {
 
     public int getValue1() {
         return value1;
+    }
+
+    public void decrease(int amount) {
+        this.value1 = Math.max(0, this.value1 - amount);
     }
 
     @Override

@@ -1,0 +1,15 @@
+{
+  "type": "aurora:in_world_block",
+  "block_1": {
+    "item": "aurora:air"
+  },
+  "block_2": {
+    "item": "aurora:extracter_clay_jar"
+  },
+  "block_3": {
+    "item": "minecraft:glowstone"
+  },
+  "output": {
+    "item": "aurora:glow_stone_shard"
+  }
+}

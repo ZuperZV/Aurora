@@ -73,7 +73,7 @@ public class AlterBlockEntityRenderer implements BlockEntityRenderer<AlterBlockE
             ItemStack outputStack = blockEntity.getOutputItems().getStackInSlot(0);
             if (!outputStack.isEmpty()) {
                 poseStack.pushPose();
-                poseStack.translate(0.0, 0.25, 0.0);
+                poseStack.translate(0.0, 0.27, 0.0);
 
                 poseStack.mulPose(Axis.YP.rotationDegrees(blockEntity.getRenderingRotation()));
 

@@ -37,8 +37,8 @@ public class ModPlacedFeatures {
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(70))));
 
         register(context, LUMINOUS_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.LUMINOUS_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(4,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(384))));
+                ModOrePlacement.commonOrePlacement(8,
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(196))));
 
         register(context, COBBLE_VOID_STONE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.COBBLE_VOID_STONE_KEY),
                 ModOrePlacement.commonOrePlacement(38,

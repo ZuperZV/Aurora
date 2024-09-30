@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -54,9 +55,13 @@ public class AuroraSkullItem extends Item {
         return starDust != null && starDust.getValue1() >= 100;
     }
 
-    public StarDustData GetStarDust(ItemStack stack) {
-        return stack.get(ModDataComponentTypes.STAR_DUST);
+    public void decrease(ItemStack stack, int amount) {
+        StarDustData starDust = stack.get(ModDataComponentTypes.STAR_DUST.get());
+
+        starDust.decrease(amount);
     }
 
-
+    public @Nullable StarDustData GetStarDust(ItemStack stack) {
+        return stack.get(ModDataComponentTypes.STAR_DUST);
+    }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "minecraft:ender_pearl"
+  },
+  "ingredient2": {
+    "item": "minecraft:fermented_spider_eye"
+  },
+  "ingredient3": {
+    "item": "minecraft:redstone"
+  },
+  "ingredient4": {
+    "item": "minecraft:nether_wart"
+  },
+  "ingredient5": {
+    "item": "minecraft:paper"
+  },
+  "output": {
+    "item": "aurora:summoning_scroll_enderman"
+  }
+}

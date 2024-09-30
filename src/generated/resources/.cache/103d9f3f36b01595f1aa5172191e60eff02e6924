@@ -1,11 +1,11 @@
-// 1.21	2024-09-23T20:55:14.4603627	Registries
+// 1.21	2024-09-29T16:37:09.8894313	Registries
 e9725accd35a6398789f11ed2569c6984aaabf0a data/aurora/neoforge/biome_modifier/add_stone_skull.json
-7a801e466e8a3b46edacd8ef95e09dc74967ee6b data/aurora/worldgen/biome/void.json
+7e844f0b0a00ed546df996a32b14ac880a25b557 data/aurora/worldgen/biome/void.json
 fbc2432fd036a33321a44c40d08cd51bba24c24a data/aurora/worldgen/configured_feature/cobble_void_stone.json
-ccb69b075778ed87ef37ae9e37714225fa01e529 data/aurora/worldgen/configured_feature/luminous_ore.json
+af981515646e6f2dba8cfb5b7521c89c10635c58 data/aurora/worldgen/configured_feature/luminous_ore.json
 1dff5bec2003d8298b936ecab024229a81011b69 data/aurora/worldgen/configured_feature/stone_skull_ore.json
 79a7dff329a143a1fc9d27c6f02a24edfbea326b data/aurora/worldgen/configured_feature/void_grass.json
 d34bd2024db3f978e4737f9d16ac4acfc4e8ab7a data/aurora/worldgen/placed_feature/cobble_void_stone_placed.json
-45d566401aa48b0adfe3c8c46e6efef751a195d0 data/aurora/worldgen/placed_feature/luminous_ore_placed.json
+c0a54f0fda711bff6cffe1e96b67dd1c657e6fad data/aurora/worldgen/placed_feature/luminous_ore_placed.json
 604ea4328f72a1eb986871a00c26ccae1d7fb2b6 data/aurora/worldgen/placed_feature/stone_skull_placed.json
 f72bff41e668d27e31913dbd34da8dd61fb866eb data/aurora/worldgen/placed_feature/void_grass_placed.json

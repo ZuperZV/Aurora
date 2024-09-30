@@ -18,6 +18,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -26,21 +27,27 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 import net.zuperz.aurora.Recipes.ArcanePedestalRecipe;
 import net.zuperz.aurora.Recipes.ModRecipes;
+import net.zuperz.aurora.block.ModBlocks;
 import net.zuperz.aurora.block.custom.ArcanePedestalBlock;
+import net.zuperz.aurora.block.custom.RiftPortalBlock;
 import net.zuperz.aurora.block.entity.ItemHandler.ContainerRecipeInput;
 import net.zuperz.aurora.block.entity.ItemHandler.CustomItemHandler;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
+import net.zuperz.aurora.item.ModItems;
 import net.zuperz.aurora.screen.AlterMenu;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.Random;
+
+import static net.zuperz.aurora.block.custom.ArcanePedestalBlock.FACING;
 
 public class ArcanePedestalBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler inputItems = createItemHandler(1);
@@ -176,14 +183,19 @@ public class ArcanePedestalBlockEntity extends BlockEntity implements MenuProvid
         Level level = this.level;
         BlockPos pos = this.getBlockPos();
 
-        // Check for wire configuration (Clay or Aurora)
+        // Check for beam configuration (Clay or Aurora)
         boolean hasBeam = ArcanePedestalBlock.areBeamPositionsValid(level, pos) || ArcanePedestalBlock.areBeamPositionsValid2(level, pos);
-        
+
         if (level == null) return false;
 
         SimpleContainer inventory = new SimpleContainer(inputItems.getSlots());
         for (int i = 0; i < inputItems.getSlots(); i++) {
             inventory.setItem(i, inputItems.getStackInSlot(i));
+        }
+
+        if (!hasBeam) {
+            notifyPlayerIfBeamsMissing();
+            return false;
         }
 
         if (hasBeam) {
@@ -208,6 +220,16 @@ public class ArcanePedestalBlockEntity extends BlockEntity implements MenuProvid
          */
 
         return false;
+    }
+
+    private void notifyPlayerIfBeamsMissing() {
+        if (level == null || level.isClientSide) return;
+
+        Player nearestPlayer = level.getNearestPlayer(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), 2.0, false);
+
+        if (nearestPlayer != null) {
+            nearestPlayer.displayClientMessage(Component.literal("Arcane Pedestal requires 2 Beams"), true);
+        }
     }
 
     private RecipeInput getRecipeInput(SimpleContainer inventory) {
@@ -286,15 +308,38 @@ public class ArcanePedestalBlockEntity extends BlockEntity implements MenuProvid
     private void setBlock(Recipe<?> recipe) {
         ItemStack outputStack = recipe.getResultItem(level.registryAccess());
 
-        BlockPos targetPos = getBlockPos().above(2);
+        BlockPos targetPos = getBlockPos().above(2); // Position above the current block
+
+        // Check if the target position is air
         if (level.getBlockState(targetPos).isAir()) {
-            Block blockToPlace = Block.byItem(outputStack.getItem());
-            if (blockToPlace != Blocks.AIR) {
-                level.setBlock(targetPos, blockToPlace.defaultBlockState(), 3);
+            Block blockToPlace;
+            BlockState blockStateToPlace;
+
+            // Determine the block to place based on the output item
+            if (outputStack.getItem() == ModItems.RIFT.get()) {
+                blockToPlace = ModBlocks.RIFT_BLOCK.get();
+                blockStateToPlace = blockToPlace.defaultBlockState();
+
+                // Set the AXIS based on the direction of the ArcanePedestalBlock
+                Direction.Axis axis = getBlockState().getValue(ArcanePedestalBlock.FACING).getAxis() == Direction.Axis.X
+                        ? Direction.Axis.Z : Direction.Axis.X; // Default to Z if not X
+                blockStateToPlace = blockStateToPlace.setValue(RiftPortalBlock.AXIS, axis);
+            } else {
+                blockToPlace = Block.byItem(outputStack.getItem());
+                blockStateToPlace = blockToPlace.defaultBlockState();
             }
+
+            // If the block to place is not air, set it in the world
+            if (blockToPlace != Blocks.AIR) {
+                level.setBlock(targetPos, blockStateToPlace, 3);
+            }
+
+            // Extract the output item from the item stack
             outputItems.extractItem(0, 1, false);
         }
     }
+
+
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {

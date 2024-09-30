@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "aurora:twig"
+  },
+  "ingredient2": {
+    "item": "aurora:void_stone_shard"
+  },
+  "ingredient3": {
+    "item": "aurora:hard_clay_ball"
+  },
+  "ingredient4": {
+    "item": "aurora:twig_clay_jar"
+  },
+  "ingredient5": {
+    "item": "aurora:fire_clay_jar"
+  },
+  "output": {
+    "item": "aurora:extracter_clay_jar"
+  }
+}

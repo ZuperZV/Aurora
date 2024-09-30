@@ -2,7 +2,6 @@ package net.zuperz.aurora.block;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -32,7 +31,7 @@ public class ModBlocks {
             () -> new MyBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
 
     public static final DeferredBlock<Block> ALCHE_FLAME = registerBlock("alche_flame",
-            () -> new AlcheFlame(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
+            () -> new AlcheFlameBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F)));
 
     public static final DeferredBlock<Block> GOLDEN_CAULDRON = registerBlock("golden_cauldron",
             () -> new GoldenCauldronBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().noOcclusion()));
@@ -41,7 +40,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(10.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
     public static final DeferredBlock<Block> ALTER = registerBlock("alter",
-            () -> new Alter(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(10.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
+            () -> new AlterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(10.0F, 6.0F).isValidSpawn(Blocks::never).noOcclusion().lightLevel(pos -> 4)));
 
     public static final DeferredBlock<Block> AURORA_WIRE = registerBlock("aurora_wire",
             () ->  new AuroraWireBlock(BlockBehaviour.Properties.of().noCollission().noOcclusion().instabreak().pushReaction(PushReaction.DESTROY)));

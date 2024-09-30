@@ -28,14 +28,10 @@ import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
-import net.zuperz.aurora.Recipes.AlterRecipe;
 import net.zuperz.aurora.Recipes.ArcanePowerTableRecipe;
-import net.zuperz.aurora.Recipes.AuroraAlterRecipe;
 import net.zuperz.aurora.Recipes.ModRecipes;
-import net.zuperz.aurora.block.custom.Alter;
 import net.zuperz.aurora.block.entity.ItemHandler.CustomItemHandler;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
-import net.zuperz.aurora.screen.AlterMenu;
 import net.zuperz.aurora.screen.ArcanePowerTableMenu;
 import org.jetbrains.annotations.Nullable;
 

@@ -33,6 +33,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 import net.zuperz.aurora.Recipes.*;
+import net.zuperz.aurora.block.custom.AlcheFlameBlock;
 import net.zuperz.aurora.block.entity.ItemHandler.CustomItemHandler;
 import net.zuperz.aurora.block.entity.ModBlockEntities;
 import net.zuperz.aurora.screen.AlcheFlameMenu;
@@ -95,7 +96,7 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
             blockEntity.fuelBurnTime--;
         }
 
-        if (blockEntity.fuelBurnTime == 0 && blockEntity.canConsumeFuel()) {
+        if (blockEntity.fuelBurnTime == 0 && blockEntity.hasRecipe() && blockEntity.canConsumeFuel()) {
             blockEntity.fuelBurnTime = blockEntity.getFuelBurnTime(blockEntity.inputItems.getStackInSlot(2));
             if (blockEntity.fuelBurnTime > 0) {
                 dirty = true;
@@ -105,6 +106,7 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
 
         if (blockEntity.fuelBurnTime > 0 && blockEntity.hasRecipe()) {
             blockEntity.progress++;
+            level.setBlockAndUpdate(pos, state.setValue(AlcheFlameBlock.LIT, true)); // Blokken tændes
             if (blockEntity.progress >= blockEntity.maxProgress) {
                 blockEntity.craftItem(blockEntity);
                 blockEntity.progress = 0;
@@ -116,6 +118,8 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
                 blockEntity.progress = Math.max(blockEntity.progress - 2, 0);
                 dirty = true;
             }
+
+            level.setBlockAndUpdate(pos, state.setValue(AlcheFlameBlock.LIT, false));
         }
 
         if (dirty) {
@@ -123,7 +127,6 @@ public class AlcheFlameBlockEntity extends BlockEntity implements MenuProvider {
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
         }
     }
-
     private boolean canConsumeFuel() {
         return isFuel(this.inputItems.getStackInSlot(2));
     }

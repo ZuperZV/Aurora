@@ -44,10 +44,12 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.AURORA_PILLER.get());
         dropSelf(ModBlocks.BEAM.get());
-        dropSelf(ModBlocks.ARCANE_PEDESTAL.get());
-
+        dropSelf(ModBlocks.ARCANE_PEDESTAL.get());;
         dropSelf(ModBlocks.ARCANE_POWER_TABLE.get());
-        dropSelf(ModBlocks.LUMINOUS_VOID_STONE.get());
+
+        this.add(ModBlocks.LUMINOUS_VOID_STONE.get(),
+                block -> createMultipleOreDrops(ModBlocks.LUMINOUS_VOID_STONE.get(), ModItems.LUMINOUS.get(), 1, 2));
+
 
         dropSelf(ModBlocks.COBBLE_VOID_STONE.get());
         this.add(ModBlocks.VOID_GRASS.get(), block -> this.createShearsDispatchTable(block, (LootPoolEntryContainer.Builder<?>)this.applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F))))));

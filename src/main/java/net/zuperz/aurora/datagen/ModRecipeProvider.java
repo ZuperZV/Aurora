@@ -38,15 +38,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", "saplings")))), RecipeCategory.MISC , Items.CHARCOAL, 0.15f , 200)
                 .unlockedBy("has_sapling",inventoryTrigger(ItemPredicate.Builder.item().of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft", "saplings"))).build()))
-                .save(pWriter);
+                .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "charcoal_from_saplings"));
 
-        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ModItems.TWIG)), RecipeCategory.MISC , Items.CHARCOAL, 0.15f , 200)
+        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ModItems.TWIG)), RecipeCategory.MISC , Items.CHARCOAL, 0.20f , 200)
                 .unlockedBy("has_twig",inventoryTrigger(ItemPredicate.Builder.item().of(ModItems.TWIG).build()))
                 .save(pWriter, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "charcoal_from_twig"));
 
         SimpleCookingRecipeBuilder.smelting ((Ingredient.of(Items.LAPIS_LAZULI)), RecipeCategory.MISC , Items.CYAN_DYE, 0.15f , 100)
                 .unlockedBy("has_lapis",inventoryTrigger(ItemPredicate.Builder.item().of(Items.LAPIS_LAZULI).build()))
                 .save(pWriter);
+
+        SimpleCookingRecipeBuilder.smelting ((Ingredient.of(ModBlocks.COBBLE_VOID_STONE)), RecipeCategory.MISC , ModBlocks.VOID_STONE, 0.20f , 200)
+                .unlockedBy("has_cobble_void_stone",inventoryTrigger(ItemPredicate.Builder.item().of(ModBlocks.COBBLE_VOID_STONE).build()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.BLUESTONE.get())
+                .pattern("AA")
+                .pattern("AA")
+                .define('A', ModItems.BLUESTONE_DUST)
+                .unlockedBy("has_bluestone", has(ModItems.BLUESTONE_DUST)).save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOFT_CLAY_JAR.get())
                 .pattern(" A ")

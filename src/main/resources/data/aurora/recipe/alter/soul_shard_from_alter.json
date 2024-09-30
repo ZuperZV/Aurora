@@ -1,0 +1,21 @@
+{
+  "type": "aurora:alter",
+  "ingredient1": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "ingredient2": {
+    "item": "aurora:void_stone_shard"
+  },
+  "ingredient3": {
+    "item": "aurora:bluestone_shard"
+  },
+  "ingredient4": {
+    "item": "aurora:wither_skull_casting"
+  },
+  "ingredient5": {
+    "item": "minecraft:diamond"
+  },
+  "output": {
+    "item": "aurora:soul_shard"
+  }
+}
