@@ -1,4 +1,5 @@
-// 1.21	2024-09-23T20:05:49.6078091	Tags for minecraft:block mod id aurora
+// 1.21	2024-09-30T19:34:46.6957534	Tags for minecraft:block mod id aurora
+c4ca8c91c48f82fa3d48ad1fad5c8deec8c2a5e1 data/aurora/tags/block/goblin_mineable_stone.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/block/mineable/axe.json
 4fe563480622b859d7e5e57d4dec099cd9d2a269 data/minecraft/tags/block/mineable/pickaxe.json
 4fe563480622b859d7e5e57d4dec099cd9d2a269 data/minecraft/tags/block/needs_iron_tool.json

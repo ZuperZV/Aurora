@@ -5,6 +5,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.item.ModItems;
@@ -89,5 +90,25 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.SUMMONING_SCROLL_ZOMBIE.get().asItem())
                 .add(ModItems.SUMMONING_SCROLL_ENDERMAN.get().asItem())
                 .add(ModItems.SUMMONING_SCROLL_GHAST.get().asItem());
+
+        tag(ModTags.Items.GOBLIN_MINEABLE_STONE)
+                .add(Blocks.STONE.asItem())
+                .add(Blocks.BLACKSTONE.asItem())
+                .add(Blocks.GRANITE.asItem())
+                .add(Blocks.DIORITE.asItem())
+                .add(Blocks.ANDESITE.asItem())
+                .add(Blocks.COBBLESTONE.asItem())
+                .add(Blocks.GOLD_ORE.asItem())
+                .add(Blocks.DEEPSLATE_GOLD_ORE.asItem())
+                .add(Blocks.IRON_ORE.asItem())
+                .add(Blocks.DEEPSLATE_IRON_ORE.asItem())
+                .add(Blocks.COAL_ORE.asItem())
+                .add(Blocks.DEEPSLATE_COAL_ORE.asItem())
+                .add(Blocks.LAPIS_ORE.asItem())
+                .add(Blocks.DEEPSLATE_LAPIS_ORE.asItem())
+                .add(Blocks.DIAMOND_ORE.asItem())
+                .add(Blocks.DEEPSLATE_DIAMOND_ORE.asItem())
+                .add(Blocks.NETHERRACK.asItem())
+                .add(Blocks.ANDESITE.asItem());
     }
 }

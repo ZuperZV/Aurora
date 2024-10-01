@@ -19,6 +19,8 @@ public class ModTags {
 
         public static final TagKey<Item> SUMMONING_SCROLL = tag("summoning_scroll");
 
+        public static final TagKey<Item> GOBLIN_MINEABLE_STONE = tag("goblin_mineable_stone");
+
         private static TagKey<Item> tag(String name) {
             return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, name));
         }
@@ -31,6 +33,7 @@ public class ModTags {
     public static class Blocks {
 
         //public static final TagKey<Block> NEEDS_ROTTEN_BONE_TOOL = tag("needs_rotten_bone_tool");
+        public static final TagKey<Block> GOBLIN_MINEABLE_STONE = tag("goblin_mineable_stone");
 
 
         private static TagKey<Block> tag(String name) {

@@ -111,6 +111,9 @@ public class ModItems {
     public static final DeferredItem<Item> WITHER_SKULL_CASTING = ITEMS.registerItem("wither_skull_casting",
             properties -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> WAND_OF_PLACE = ITEMS.registerItem("wand_of_place",
+            properties -> new CenterSetterItem(new Item.Properties()));
+
 //Soul Shard
     public static final DeferredItem<Item> SOUL_SHARD = ITEMS.register("soul_shard",
             () -> new SoulShardItem(EntityType.ITEM, new Item.Properties().stacksTo(1)));

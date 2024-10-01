@@ -24,6 +24,7 @@ import net.neoforged.neoforge.network.handling.IPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.zuperz.aurora.Entity.ModEntities;
 import net.zuperz.aurora.Entity.client.ChainRenderer;
+import net.zuperz.aurora.Entity.client.GoblinMinerRenderer;
 import net.zuperz.aurora.Entity.client.VoidWalkerRenderer;
 import net.zuperz.aurora.Recipes.ModRecipes;
 import net.zuperz.aurora.block.ModBlocks;
@@ -176,6 +177,7 @@ public class aurora {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.CHAIN.get(), ChainRenderer::new);
             EntityRenderers.register(ModEntities.VOID_WALKER.get(), VoidWalkerRenderer::new);
+            EntityRenderers.register(ModEntities.GOBLIN_MINER.get(), GoblinMinerRenderer::new);
         }
     }
 }

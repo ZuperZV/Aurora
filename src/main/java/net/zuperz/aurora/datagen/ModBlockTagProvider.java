@@ -3,10 +3,12 @@ package net.zuperz.aurora.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.zuperz.aurora.aurora;
 import net.zuperz.aurora.block.ModBlocks;
+import net.zuperz.aurora.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -56,5 +58,26 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
         this.tag(BlockTags.MINEABLE_WITH_AXE)
         ;
+
+
+        tag(ModTags.Blocks.GOBLIN_MINEABLE_STONE)
+                .add(Blocks.STONE)
+                .add(Blocks.BLACKSTONE)
+                .add(Blocks.GRANITE)
+                .add(Blocks.DIORITE)
+                .add(Blocks.ANDESITE)
+                .add(Blocks.COBBLESTONE)
+                .add(Blocks.GOLD_ORE)
+                .add(Blocks.DEEPSLATE_GOLD_ORE)
+                .add(Blocks.IRON_ORE)
+                .add(Blocks.DEEPSLATE_IRON_ORE)
+                .add(Blocks.COAL_ORE)
+                .add(Blocks.DEEPSLATE_COAL_ORE)
+                .add(Blocks.LAPIS_ORE)
+                .add(Blocks.DEEPSLATE_LAPIS_ORE)
+                .add(Blocks.DIAMOND_ORE)
+                .add(Blocks.DEEPSLATE_DIAMOND_ORE)
+                .add(Blocks.NETHERRACK)
+                .add(Blocks.ANDESITE);
     }
 }

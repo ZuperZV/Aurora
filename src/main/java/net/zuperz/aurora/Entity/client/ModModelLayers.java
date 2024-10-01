@@ -10,4 +10,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation VOID_WALKER = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "void_walker"), "main");
+
+    public static final ModelLayerLocation GOBLIN_MINER = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(aurora.MOD_ID, "goblin_miner"), "main");
 }
